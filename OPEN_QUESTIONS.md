@@ -61,6 +61,8 @@ TMEC Command asks these one at a time during the intake (`getting-started`), or 
 | J14 | Who clears the [verify] items in `policies/AU-COMPLIANCE.md` before the first live send? | M4, M5 |
 | J15 | HubSpot writes at M4 (reactivation and newsletter lists and emails): a second private-app token with only marketing email and list write scopes, in `.secrets/hubspot-write.env` as `HUBSPOT_WRITE_TOKEN`, or your team creates each approved email from the bot's ready-to-paste file? | M4 |
 | J16 | Can Grok's Connect apps read the TMEC partner inbox, for forwarded partner replies? | Dream 100 |
+| J17 | Mail lifecycle (first-touch, review and maintenance emails) is paused with the other Orgo mail routines, because it keeps its own opt-out files. Move those emails to CRM & Reactivation, or sync opt-outs both ways (through HubSpot) and keep it running? | Lifecycle emails |
+| J18 | Vendor Scout's messages: Tommy sends each one himself today. Keep that, or send from his mailbox on his yes like Dream 100? | Vendor Scout |
 | J7 | One HubSpot key shared by CRM & Reactivation and Content Studio, kept apart by the `REACT-` and `NEWS-` name prefixes: acceptable? | M4 |
 
 ## Owed by Justin's team

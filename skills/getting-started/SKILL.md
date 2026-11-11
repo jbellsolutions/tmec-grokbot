@@ -17,7 +17,7 @@ description: The intake interview. Use once at setup (the intake step in START-H
    - one question per message;
    - short enough to answer on a phone;
    - offer choices when there are only a few.
-4. Write each answer in place of its `ASK`, with today's date. Write the team's settings to `context/config.json` (keep `run`, `live_sends` and the other keys Step 1 wrote; add `schedule`, `vendor_messages`, `partner_fee`, `partner_fee_trigger`, `attribution_window`, `partner_inbox`, `referral_offer`, `hubspot_bcc_address` as Tommy answers them). A required field nobody knows yet stays `REQUIRED`; never guess it.
+4. Write each answer in place of its `ASK`, with today's date. Write the team's settings to `context/config.json` (keep `run`, `live_sends` and the other keys Step 1 wrote; add `schedule`, `vendor_messages`, `partner_fee`, `partner_fee_trigger`, `attribution_window`, `partner_inbox`, `referral_offer`, `hubspot_bcc_address`, `quote_followup_route`, `reactivation_window_months`, `reactivation_cadence`, `cold_email_tool`, `cold_email_domain`, `capacity_full_after_days` (the wait at which Ops' board counts as full) as Tommy or Justin's team answer them; each starts as `ASK`). `vendor_messages` (drafts or research only) goes in `config.json`; whether Vendor Scout runs at all is `vendor_scout` in `owner.md`. A required field nobody knows yet stays `REQUIRED`; never guess it.
 5. When the apps are connected later, fill in any IDs you can now look up yourself (Slack member IDs, sheet column names), then confirm them with Tommy.
 6. Done: no `ASK` is left that the current milestone needs. Tommy has said "right" to the readback.
 

@@ -32,7 +32,7 @@ Record: the source URL and date are on the prospect row. If they ask to be remov
 
 What it usually means: exactly that.
 
-Action: add the address to `data/partners/opt-outs.csv` in the run that reads it (and the tool unsubscribes them in your own campaign), and put a "for CRM & Reactivation: do-not-contact" line in your daily note if they have a HubSpot record. Never write `data/crm/suppression.csv`: that file is CRM & Reactivation's. **No reply.** A confirmation is another message, and AU-COMPLIANCE says never to ask a person to confirm their unsubscribe.
+Action: add the address to `data/partners/opt-outs.csv` in the run that reads it (and the tool unsubscribes them in your own campaign), and put a "for CRM & Reactivation: do-not-contact <row id>" line (the row id, never the email address) in your daily note if they have a HubSpot record. Never write `data/crm/suppression.csv`: that file is CRM & Reactivation's. **No reply.** A confirmation is another message, and AU-COMPLIANCE says never to ask a person to confirm their unsubscribe.
 
 Record: status `opted out`, the date, the words they used (in `opt-outs.csv`). Never a second message after this.
 

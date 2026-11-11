@@ -39,7 +39,7 @@ Send the owner one message that checks three things:
 1. Create `/workspace/tmec-team/` and work only inside it.
 2. Unpack the attached `tmec-grokbot.zip` to `/workspace/tmec-team/repo`. If the zip holds one top folder (for example `tmec-grokbot/`), move its contents up into `repo/`. If there's no zip, ask the owner for it (Justin's team sends it). Never ask for a GitHub token.
 3. Create these folders: `context/`, `daily/`, `data/radar/handoff/`, `data/partners/dream100/`, `data/partners/dream500/`, `data/partners/trades/`, `data/partners/active/`, `data/partners/handoff/`, `data/crm/`, `data/content/`, `data/seo/`, `data/ops/`, `data/forecast/`, `data/vendors/`, `media/inbox/` (job footage and photos Tommy shares), `approved/decisions/`, `log/`, `vault/Daily/`, `state/test/`, and `.secrets/` with mode 700.
-4. For each bot slug (`lead-radar`, `dream-100`, `dream-500`, `trades-outreach`, `crm-reactivation`, `content-studio`, `seo`, `ops`, `forecast`, `vendor-scout`), create `requests/to-<slug>/` and `approved/pending/<slug>/`.
+4. For each bot slug (`lead-radar`, `dream-100`, `dream-500`, `trades-outreach`, `crm-reactivation`, `content-studio`, `seo`, `ops`, `forecast`, `vendor-scout`), create `requests/to-<slug>/`, `approved/pending/<slug>/` and `approved/decisions/<slug>/`.
 5. Create `data/partners/opt-outs.csv` with one line: `date,email,business,writer,their_words`.
 6. Create the switch files:
    - `context/routines-on.md`: `# Routines switched on. One per line: <routine name>: on, or <routine name>: test`
@@ -127,7 +127,7 @@ Also check each bot can read its skills: ask two bots to name one step of one of
 
 ## Step 7. The Orgo agents that do the same jobs
 
-Tommy's Hermes agents on his four Orgo computers do several of these jobs. Two bots must never write the same thing, so each Orgo routine below is **paused before its Grok twin's routines go on** in Step 8. Pausing a live agent is Justin's yes, done by Justin's team from `tmec-aios` (`python3 tools/orgo_team.py routine <role> <routine> off`, per routine). You don't touch the Orgo computers.
+Tommy's Hermes agents on his four Orgo computers do several of these jobs. Two bots must never write the same thing, so each Orgo routine below is **paused before its Grok twin's routines go on** in Step 8. Pausing a live agent is Justin's yes, done by Justin's team from `tmec-aios` (`python3 tools/orgo_team.py routine <role> "<routine name>" off`, per routine, quoted because names have spaces). You don't touch the Orgo computers.
 
 These are the Orgo routines' exact names (from `tmec-aios/routines/`):
 
@@ -136,13 +136,17 @@ These are the Orgo routines' exact names (from `tmec-aios/routines/`):
 | TMEC Leads · radar | radar-morning-triage, Radar brief tune | Radar sweep |
 | TMEC Leads · vendorscout | Vendor scout weekly | Vendor review |
 | TMEC Outreach · partners | Partner outreach wave, Partner replies | Dream 100 drafts (the first partner routine to go on) |
-| TMEC Outreach · mail | nurture-daily, Reactivation weekly | CRM sweep |
+| TMEC Outreach · mail | nurture-daily, Reactivation weekly, Mail lifecycle | CRM sweep |
 | TMEC Outreach · mail | newsletter-monthly | Newsletter |
 | TMEC Back Office · installs | Capacity board | Capacity board (Ops) |
 | TMEC Content · studio | Content week | Content week (Content Studio) |
 | TMEC Content · forecast | Scoreboard weekly, Forecast monthly | Monday scoreboard |
 
-Keep running, because no Grok bot does their job: Supplier review monthly (vendorscout), Mail lifecycle (mail: first-touch, review and maintenance emails), Install nudges (installs), CRM desk, Contact cards and Call coach weekly (crm), Monday numbers (forecast: the Xero figures), everything on TMEC Leads · ads and searchads (paid ads stay with Claude Code), TMEC Back Office · office, and Alfred (its CRM sweep daily included). If Tommy wants any of those on Grok later, it's a new ask.
+**Mail lifecycle** is paused too, though no Grok bot sends its first-touch, review and maintenance emails yet: it keeps its own opt-out files, and two senders with separate opt-out lists would break the Spam Act duty. Those emails are a new ask for CRM & Reactivation (OPEN_QUESTIONS J17).
+
+**On Tommy's Mac** (not Orgo): his Chief of Staff's **Morning brief**, **Evening brief** and **Team sync** run at the same minutes as TMEC Command's briefs. Before TMEC Command's briefs go on, Justin's team asks Tommy's master chat, on Justin's yes, to switch those three off in its `state/routines-on.md` (they aren't Orgo routines, so `orgo_team.py` can't). Tommy then gets one brief and one approval list.
+
+Keep running, because no Grok bot does their job: Supplier review monthly (vendorscout), Install nudges (installs; it reads the capacity board, which stops updating, so it reports UNKNOWN until Ops' board is shared with it), CRM desk, Contact cards and Call coach weekly (crm), Monday numbers (forecast: the Xero figures; it reads the Orgo scoreboard, which stops updating once Scoreboard weekly pauses, so Forecast's Monday scoreboard replaces that part), everything on TMEC Leads · ads and searchads (paid ads stay with Claude Code), TMEC Back Office · office, and Alfred (its CRM sweep daily included). If Tommy wants any of those on Grok later, it's a new ask.
 
 In **Justin's test**, skip this step: nothing on Tommy's computers is touched.
 
@@ -161,14 +165,14 @@ A routine belongs to the bot that creates it, so each bot creates its own. For e
    - Add `<NAME>: test` to `context/routines-on.md`.
    - Press **Test** (the bot's **Details** tab), or run the instruction once now. **Test does real work.** The `test` line is what keeps every message to the owner only and every write in `state/test/`, so add it before pressing Test, every time.
    - Confirm three things: it wrote only inside `/workspace/tmec-team/`, it logged one line in `log/runs-<YYYY-MM>.md`, and it messaged nobody but the owner.
-   - Remove the `test` line.
+   - Remove the `test` line, and close any `test-` items the test queued: add each to that bot's sent-keys file as `test, closed`, so they never show in a brief.
 
 **Check:** every routine in `manifest.json` is in the registry, PAUSED, with a next run time in Brisbane time, and has one clean test line in the run log.
 
 ## Step 9. Acceptance and report
 
 1. **Stop test.** Create `state/EXTERNAL_WRITES_STOPPED` with "setup test" inside, run one routine with its `test` line, and confirm it logs SKIPPED_STOPPED and sends nothing. Remove the file and the `test` line.
-2. **Approval test.** Show the owner the Dream 100 draft from Step 6 as a numbered item. Ask them to answer "no". Confirm `approved/decisions/` has their words and the row says "declined", and nothing was sent.
+2. **Approval test.** Show the owner the Dream 100 draft from Step 6 as a numbered item. Ask them to answer "no". Confirm `approved/decisions/dream-100/` has their words and the row says "declined", and nothing was sent.
 3. **Readback.** Read back every bot, every routine (name, owner, WHEN, paused) and every connection into `context/team-registry.md`.
 4. **Report** to the owner in one message: what's set up; what's on (nothing yet); what's waiting for them (from `OPEN_QUESTIONS.md`); what didn't work and why. Write the same to `log/setup.md`.
 

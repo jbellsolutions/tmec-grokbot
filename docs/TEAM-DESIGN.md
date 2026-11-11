@@ -49,7 +49,7 @@ See `PROJECT_CHARTER.md` §7.
 
 ## The Orgo team it replaces
 
-Tommy's Hermes agents on his four Orgo computers do several of the same jobs (radar, partners, mail, crm, studio, forecast, vendorscout). Two bots must never write the same thing, so each Orgo role is paused **before** its Grok twin's routines go on (START-HERE Step 7). Pausing a live agent is Justin's yes.
+Tommy's Hermes agents on his four Orgo computers do several of the same jobs (radar, partners, mail, crm, studio, forecast, vendorscout). Two bots must never write the same thing, so each Orgo routine that does a Grok bot's job is paused **before** that bot's routines go on, and the rest keep running (the exact list is START-HERE Step 7). Pausing a live agent is Justin's yes.
 
 ## Routines
 

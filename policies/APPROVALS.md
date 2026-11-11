@@ -44,21 +44,31 @@ TEXT:
 HASH: <sha256 of every byte between the ---PAYLOAD--- line and the ---END--- line, newlines included>
 ```
 
+**The hash, one way for every bot:**
+```
+awk '/^---PAYLOAD---$/{f=1;next} /^---END---$/{f=0} f' <item file> | sha256sum | cut -d" " -f1
+```
+
+**A queued item is never rewritten.** Once an item file is in `approved/pending/`, its bot doesn't edit it; a change is a new item id, and the old one is closed with the outcome `superseded` in its sent-keys file.
+
 The payload holds everything that makes the action what it is: who it goes to, when, and the exact words. A list is covered by its file's own sha256, so a rebuilt list doesn't match.
 
-**A decision** is `/workspace/tmec-team/approved/decisions/<bot-slug>/<id>.md`, written only by TMEC Command (`approval-queue`), and only after it has shown Tommy the payload (the full text, the recipients or the list count with five sample rows, and the send time) in chat. It records `HASH:` copied from the item, `SHOWN:` (the time it showed him), `ANSWER: yes | no | change` and `TOMMY:` (his exact words). An item with a decision file is no longer waiting.
+**A decision** is `/workspace/tmec-team/approved/decisions/<bot-slug>/<id>.md`, written only by TMEC Command (`approval-queue`), and only after it has shown Tommy the payload (the full text, the recipients or the list count with five sample rows, and the send time) in chat. It records `HASH:` (the hash of the payload it showed him, recomputed at that moment), `SHOWN:` (the time it showed him), `ANSWER: yes | no | change` and `TOMMY:` (his exact words). An item with a decision file is no longer waiting.
 
 **The send gate.** Before any outward action (send, schedule, post, publish, create or launch a campaign, create a HubSpot email or list), the bot checks all of these, in its own chat or a routine, every time:
 1. `/workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED` is absent.
 2. The routine isn't in test mode, and this isn't Justin's test run (`context/config.json` `run` is `tommy`).
 3. `context/config.json` `live_sends` is `true` (TMEC Command sets it at M4, on Tommy's words).
-4. A decision exists at `approved/decisions/<bot-slug>/<id>.md` with `ANSWER: yes`, and the HASH you **recompute** from the pending file now equals the decision's HASH.
+4. A decision exists at `approved/decisions/<bot-slug>/<id>.md` with `ANSWER: yes`, a `SHOWN:` time (not "brief line only"), dated after `live_sends` went true or re-shown since, and the HASH you **recompute** from the pending file now (the command above) equals the decision's HASH.
 5. Its sent key isn't in `state/sent-keys-<bot-slug>.md`.
+6. The item id doesn't start with `test-`. Test items are never sent, whatever the decision says.
 Any check failing: do nothing outward, write why in the daily note, and stop that item. After acting (or on "no" or "change"), add the item id to the sent-keys file with the outcome, so it's never handled twice. A "change" is redrafted once, as a new item id.
 
 **When decisions are acted on.** TMEC Command nudges the bot right after writing a decision; the bot acts in its own chat then. Its next routine run is the fallback. If an Auto-review prompt appears inside a routine and expires, the item stays "approved, not sent" and the bot lists it in its daily note, so the brief shows it.
 
-**Scheduled sends and the stop.** A bot that schedules a send in an outside tool (HubSpot email, the cold email tool) unschedules or pauses it when the stop file appears, as the one action the stop file allows, and lists what it couldn't.
+**No scheduled sends.** No bot schedules an email or post ahead in an outside tool. SEND names the earliest day; the bot's own run on or after that day sends it at the moment the gate passes. The one exception is a cold email campaign, which runs on the tool's own sequence: Dream 500 and Trades Outreach pause their own campaigns when the stop file appears (the one action it allows), and list what they couldn't.
+
+**Decisions given before M4.** A yes recorded while `live_sends` was false is shown to Tommy again before it's acted on, once `live_sends` is true.
 
 ## Standing approvals
 

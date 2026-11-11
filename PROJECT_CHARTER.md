@@ -101,6 +101,7 @@ Every record has exactly one writer.
 | Items waiting on Tommy | `approved/pending/<bot>/` | that bot |
 | Tommy's answers | `approved/decisions/<bot>/` | TMEC Command, only after showing Tommy the payload |
 | Numbered lists shown to Tommy | `daily/<date>/list-<HHMM>.md` | TMEC Command |
+| Hand-off lines already turned into jobs | `state/handled-lines.md` | TMEC Command |
 | Briefs | `daily/<date>/brief.md`, `daily/<date>/evening.md` | TMEC Command |
 | Radar leads and hand-off | `data/radar/` | Lead Radar |
 | Dream 100 list, messages and sends | `data/partners/dream100.csv`, `data/partners/dream100/` | Dream 100 |

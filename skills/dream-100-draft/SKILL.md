@@ -45,7 +45,7 @@ In test mode, or when `config.json` `run` is `test`: write research and drafts u
    WHY: <score> | <one-line angle>
    ---PAYLOAD---
    TO: <name>, <business>, <email>
-   CONSENT: published_business_address: <page link>, read <date>; site checked, no refusal of unsolicited commercial email (inferred consent under the Spam Act, per policies/AU-COMPLIANCE.md)
+   CONSENT: <published_business_address: <page link>, read <date>; site checked, no refusal of unsolicited commercial email | existing_relationship: <how Tommy already works with them, from context/owner.md> (Wave 0)>
    SEND: now on yes
    SUBJECT: <subject>
    TEXT:

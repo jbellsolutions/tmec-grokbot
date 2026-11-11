@@ -47,7 +47,8 @@ The real file (`CLIENT-CONTEXT.md`) is private: Justin's team attaches it at ins
 
 - Current vendors, price per lead, how many installers each lead goes to (`lead_vendors`): ASK
 - Bought-lead baseline: cost per lead (`baseline_cost_per_lead_aud`, about 60 on the 28 Oct call) and close rate (`baseline_close_rate_pct`, mid-20s): confirm
-- Vendor Scout: research only, or draft vendor messages for Tommy's yes (`vendor_scout`, `vendor_messages`): ASK
+- Vendor Scout on or off (`vendor_scout`): ASK
+- Vendor Scout drafts messages to vendors for Tommy's yes, or research only (`vendor_messages`, saved in config.json): ASK
 
 ## Schedule
 

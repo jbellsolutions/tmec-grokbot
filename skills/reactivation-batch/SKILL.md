@@ -8,7 +8,7 @@ description: Picks the people for the next reactivation batch (old enquiries gon
 Tommy, 8 Nov: reactivation goes through HubSpot marketing email, not the Microsoft 365 mailboxes. Email and text. Drafts first. Verify emails first. "Go ahead and do it yourself" covers the HubSpot change. Test batch of 24, then ramp. Cadence he set: twice a week for four weeks, then every two weeks.
 
 ## Inputs
-- HubSpot, read-only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only HubSpot route this bot has): contacts with their enquiry date, last two-way contact, stage, lead source, consent evidence, unsubscribe status and whether they are a marketing contact.
+- HubSpot, read-only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only token for reading; creating marketing emails and lists needs the separate `HUBSPOT_WRITE_TOKEN` at M4): contacts with their enquiry date, last two-way contact, stage, lead source, consent evidence, unsubscribe status and whether they are a marketing contact.
 - `/workspace/tmec-team/data/crm/suppression.csv` and HubSpot unsubscribe status.
 - `/workspace/tmec-team/data/crm/reactivation-state.csv` (yours): `hubspot_contact_id, batch_id, step, last_sent_on, next_due_on, status`.
 - `/workspace/tmec-team/data/crm/quote-followup-state.csv`: anyone active in the quote follow-up isn't in a batch.
@@ -64,7 +64,7 @@ Tommy, 8 Nov: reactivation goes through HubSpot marketing email, not the Microso
    WHY: <how picked: window, stage, sources>; held <n> by reason; treg dropped <n> (or "not verified: test"); <n> not marketing contacts
    ---PAYLOAD---
    TO: <count> people, HubSpot list REACT-<YYYY-MM-DD>-<n>. List file: /workspace/tmec-team/data/crm/reactivation/<id>-list.csv, sha256 <hash of that file>, <count> rows
-   SEND: <day and time> via HubSpot marketing email
+   SEND: <earliest day>, sent by the reactivation run that day via HubSpot marketing email (never scheduled ahead)
    SUBJECT: <subject>
    TEXT:
    <the email, exactly as it will go>
@@ -83,10 +83,10 @@ Tommy, 8 Nov: reactivation goes through HubSpot marketing email, not the Microso
    If any fails: do nothing outward, write why in the daily note (it shows as "approved, not sent" in the brief), and stop that item. If a prompt inside a routine expires, the item stays "approved, not sent". If all hold:
    1. Re-check the suppression list and HubSpot unsubscribes for everyone in the list, and drop anyone new. The list may shrink; it never grows.
    2. If `/workspace/tmec-team/.secrets/hubspot-write.env` has no `HUBSPOT_WRITE_TOKEN` (the one read-only token can't create a list or an email), write the approved email to `data/crm/reactivation/<id>-ready-to-paste.md`, tell TMEC Command exactly what must be created in HubSpot and by whom (open question for Justin), record the outcome `approved, not created: no write token`, and stop. Nothing is marked sent.
-   3. Create the static list `REACT-<id>` with exactly those contacts. If a list or email with that name already exists, stop and read it back instead.
-   4. Create the marketing email `REACT-<id>` with exactly the approved text. If the write token can't create or send it, make what it can and tell Tommy exactly what to press.
-   5. Send or schedule it only as the item said.
-   6. Read back the list size and the email's state; add the id to `state/sent-keys-crm-reactivation.md` with the outcome `sent` (or `scheduled <time>`) only after that.
+   3. Create the static list named exactly as the item's TO line (`REACT-<YYYY-MM-DD>-<n>`) with exactly those contacts. If a list or email with that name already exists, stop and read it back instead.
+   4. Create the marketing email with the same name with exactly the approved text. If the write token can't create or send it, make what it can and tell Tommy exactly what to press.
+   5. Send it now, if today is on or after the SEND day. Never schedule it ahead in HubSpot.
+   6. Read back the list size and the email's state; add the id to `state/sent-keys-crm-reactivation.md` with the outcome `sent` only after that.
    7. Update `reactivation-state.csv`.
    Texts are never sent. **Stop:** when `state/EXTERNAL_WRITES_STOPPED` appears, unschedule any `REACT-` email you scheduled that hasn't sent (the one action the stop file allows), and list in the daily note anything you couldn't unschedule. Only TMEC Command writes a "pause all campaigns" job.
 9. **After a batch.** Read HubSpot's own numbers (sent, bounced, unsubscribed, replies) and report them as HubSpot's. Copy new unsubscribes into `suppression.csv`. If opt-outs pass 2% of the sends or any complaint arrives, stop: no next batch until Tommy says so.

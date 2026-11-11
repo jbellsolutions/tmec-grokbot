@@ -13,7 +13,7 @@ Weekly, on Thursdays (Tommy, 8 Nov). Content Studio owns the newsletter email in
 - A job story: `data/content/shoots/*.md` where the shoot is in the consent log and Tommy's decision says it may be used in an email, and it isn't marked used.
 - `/workspace/tmec-team/data/content/tip-bank.md` (yours): tips, each with a source or "general practice, no numbers".
 - `/workspace/tmec-team/data/content/newsletter-log.md` (yours): issue numbers and what each said.
-- HubSpot, read-only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only HubSpot route this bot has): customers (won deal), and contacts who asked to hear from TMEC, with consent evidence, unsubscribe status and whether they are marketing contacts.
+- HubSpot, read-only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only token for reading; creating marketing emails and lists needs the separate `HUBSPOT_WRITE_TOKEN` at M4): customers (won deal), and contacts who asked to hear from TMEC, with consent evidence, unsubscribe status and whether they are marketing contacts.
 - `/workspace/tmec-team/data/crm/suppression.csv` (read-only).
 - `/workspace/tmec-team/context/owner.md`: legal name, ABN, licence number, postal address, phone, reply-to. Any missing: NO_CLIENT_SOURCE.
 - `/workspace/tmec-team/repo/policies/AU-COMPLIANCE.md`.
@@ -62,7 +62,7 @@ Weekly, on Thursdays (Tommy, 8 Nov). Content Studio owns the newsletter email in
    WHY: <items used, fact dates, held counts, how many are not marketing contacts>; same issue as news-<YYYY-MM-DD>-b with a different subject: send only one
    ---PAYLOAD---
    TO: <audience count> people, HubSpot list NEWS-audience. List file: /workspace/tmec-team/data/content/newsletter/<YYYY-MM-DD>-audience.csv, sha256 <hash of that file>, <count> rows
-   SEND: <Thursday time> via HubSpot marketing email
+   SEND: <the Thursday>, sent by the newsletter run that day via HubSpot marketing email (never scheduled ahead)
    SUBJECT: <subject A>
    TEXT:
    <the issue, exactly as it will go, including the preview line>
@@ -79,7 +79,7 @@ Weekly, on Thursdays (Tommy, 8 Nov). Content Studio owns the newsletter email in
    If any fails: do nothing outward, write why in the daily note (the brief shows it as "approved, not sent"), and stop that item. If all hold (M4 and a write token only):
    1. Re-check the suppression list and HubSpot unsubscribes and drop anyone new. The audience may shrink; it never grows.
    2. If `/workspace/tmec-team/.secrets/hubspot-write.env` has no `HUBSPOT_WRITE_TOKEN` (the one read-only token can't create a list or an email), write the approved email to `data/content/newsletter/<date>-ready-to-paste.md`, tell TMEC Command exactly what must be created in HubSpot and by whom (open question for Justin), record the outcome `approved, not created: no write token`, and stop. Nothing is marked sent.
-   3. Create or refresh the static list `NEWS-audience`; create the marketing email `NEWS-<date>` with exactly the approved text (if an email of that name exists, read it back instead of creating it); send or schedule it as approved (if the write token can't, tell Tommy exactly what to press); read back the list size and the email state; only then add the id to `sent-keys-content-studio.md` with the outcome `sent` (or `scheduled <time>`) and add an entry to `newsletter-log.md`.
+   3. Create or refresh the static list `NEWS-audience`; create the marketing email `NEWS-<date>` with exactly the approved text (if an email of that name exists, read it back instead of creating it); send it now (never schedule it ahead) (if the write token can't, tell Tommy exactly what to press); read back the list size and the email state; only then add the id to `sent-keys-content-studio.md` with the outcome `sent` (or `scheduled <time>`) and add an entry to `newsletter-log.md`.
    **Stop:** when `state/EXTERNAL_WRITES_STOPPED` appears, unschedule any `NEWS-` email you scheduled that hasn't sent (the one action the stop file allows), and list anything you couldn't unschedule in the daily note. Only TMEC Command writes "pause all campaigns" jobs.
 7. **Watch the signals.** Read HubSpot's own numbers after a send and report them as HubSpot's. Any complaint, or opt-outs above 2% of sends: tell Tommy and write no next issue until he says so. Reply-based opt-outs that someone relays go into the daily note for TMEC Command to pass to CRM & Reactivation (it owns `suppression.csv`).
 

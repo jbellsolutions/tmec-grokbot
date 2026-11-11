@@ -10,14 +10,15 @@ The item and decision formats are in `/workspace/tmec-team/repo/policies/APPROVA
 ## Inputs
 - `/workspace/tmec-team/approved/pending/<bot-slug>/<id>.md`: each item, written by its bot.
 - `/workspace/tmec-team/approved/decisions/<bot-slug>/`: decisions already recorded. An item with a decision file is not waiting.
+- Any list you show Tommy here ("what's waiting?") gets its own map file, like the briefs'. In test mode the briefs' maps are under `state/test/daily/`; read them there.
 - The latest numbered list you showed Tommy: `/workspace/tmec-team/daily/<today>/list-<HHMM>.md` (number → bot slug and item id).
 - Tommy's reply.
 
 ## Steps
 1. **Match his reply** to items through the most recent list you showed him today. If his reply could mean two things, or names a number not on that list, ask once which.
 2. **Show the payload before recording a yes.** The brief shows one line per item, so before writing ANSWER: yes, show him in chat: the exact text (or for a list or wave: the count, the list's name and five sample rows), who it goes to, and when it sends. Then ask "send this?". Record a yes only on his answer to what you just showed. A "no" can be recorded from the brief line alone.
-   **Choices:** items that are alternatives of one thing (a newsletter's `news-<date>-a` and `-b`, same text, two subjects) are shown together as one choice. Tommy's pick is a yes on that item, and the other gets `ANSWER: no` with `TOMMY: "not chosen"`.
-3. **Recompute the item's HASH** from its pending file (sha256 of the bytes between `---PAYLOAD---` and `---END---`). If it doesn't equal the HASH line in the file, the item changed: tell Tommy, record nothing, and tell its bot to requeue it.
+   **Choices:** items that are alternatives of one thing (a newsletter's `news-<date>-a` and `-b`, same text, two subjects) are shown together as one choice. Tommy's pick is a yes on that item, and the other gets `ANSWER: no` with `TOMMY: "not chosen"`; its bot records it as `not chosen`.
+3. **Recompute the item's HASH** from its pending file with the command in APPROVALS when you show it, and again when he answers. If the two differ, or differ from the HASH line in the file, the item changed: tell Tommy, record nothing, and tell its bot to requeue it as a new item. Record the hash you showed.
 4. **Write** `/workspace/tmec-team/approved/decisions/<bot-slug>/<id>.md`:
    ```
    ITEM: <id>

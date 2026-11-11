@@ -27,9 +27,10 @@ description: Turns what Tommy asks for into a job for the one bot that owns it, 
    One topic per job.
 4. **Nudge** the bot with one line ("New job in requests/to-<bot>/<file>"). If bot-to-bot messages don't work on this account, skip it: each bot reads its folder at its next run, and Tommy hears when that is.
 5. **Follow up.** In each brief, a job not in that bot's `state/done-<bot>.md` by its BY time is listed as late, with the bot's last run-log line.
-6. **Capacity full.** When Ops' board says the next free slot is past the line in `context/config.json`, write a job to Lead Radar, Dream 500 and Trades Outreach to hold new outreach, and tell Tommy. Lift it the same way when Ops says there's room.
+6. **Capacity full.** When Ops' board says the next free slot is past `capacity_full_after_days` in `context/config.json`, write a job to Lead Radar, Dream 500 and Trades Outreach to hold new outreach, and tell Tommy. Lift it the same way when Ops says there's room.
 
-7. **Stop.** When Tommy or Justin's team says "stop everything", or another bot tells you it created the stop file: make sure `/workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED` exists with the reason, write "pause all campaigns" jobs to `requests/to-dream-500/` and `requests/to-trades-outreach/` and nudge both, nudge CRM & Reactivation and Content Studio to unschedule any scheduled HubSpot email, and tell Tommy once what's paused and what isn't. Only you write those jobs. Remove the stop file only on Tommy's words.
+7. **Hand-off lines between bots.** At every brief, read each bot's daily notes since the last brief for lines that start `for <bot name>:` (for example `for Dream 100: <business>, <their words>, <link>`). Write each as a job in `requests/to-<that bot's slug>/`, and log the source file and line in `state/handled-lines.md` (yours) so no line becomes two jobs.
+8. **Stop.** When Tommy or Justin's team says "stop everything", or another bot tells you it created the stop file: make sure `/workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED` exists with the reason, write "pause all campaigns" jobs to `requests/to-dream-500/` and `requests/to-trades-outreach/` and nudge both, nudge CRM & Reactivation and Content Studio to unschedule any scheduled HubSpot email, and tell Tommy once what's paused and what isn't. Only you write those jobs. Remove the stop file only on Tommy's words.
 
 ## Done means
 Every request from Tommy is a job with one owner, and every job ends in that bot's done file or in the brief as late.
