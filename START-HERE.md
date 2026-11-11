@@ -37,7 +37,7 @@ Send the owner one message that checks three things:
 ## Step 1. Make the workspace
 
 1. Create `/workspace/tmec-team/` and work only inside it.
-2. Unpack the attached `tmec-grokbot.zip` to `/workspace/tmec-team/repo`. If the zip holds one top folder (for example `tmec-grokbot/`), move its contents up into `repo/`. If there's no zip, ask the owner for it (Justin's team sends it). Never ask for a GitHub token.
+2. Get the package: if the owner gave you a download link (https://github.com/jbellsolutions/tmec-grokbot/releases/latest/download/tmec-grokbot.zip), download it with curl -L; if they attached `tmec-grokbot.zip`, use that. Unpack it to `/workspace/tmec-team/repo`. If the zip holds one top folder (for example `tmec-grokbot/`), move its contents up into `repo/`. If there's no zip, ask the owner for it (Justin's team sends it). Never ask for a GitHub token.
 3. Create these folders: `context/`, `daily/`, `data/radar/handoff/`, `data/partners/dream100/`, `data/partners/dream500/`, `data/partners/trades/`, `data/partners/active/`, `data/partners/handoff/`, `data/crm/`, `data/content/`, `data/seo/`, `data/ops/`, `data/forecast/`, `data/vendors/`, `media/inbox/` (job footage and photos Tommy shares), `approved/decisions/`, `log/`, `vault/Daily/`, `state/test/`, and `.secrets/` with mode 700.
 4. For each bot slug (`lead-radar`, `dream-100`, `dream-500`, `trades-outreach`, `crm-reactivation`, `content-studio`, `seo`, `ops`, `forecast`, `vendor-scout`), create `requests/to-<slug>/`, `approved/pending/<slug>/` and `approved/decisions/<slug>/`.
 5. Create `data/partners/opt-outs.csv` with one line: `date,email,business,writer,their_words`.

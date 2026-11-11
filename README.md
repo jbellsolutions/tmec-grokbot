@@ -20,17 +20,18 @@ Tommy talks to **TMEC Command**. It hands each job to the bot that owns it and b
 
 Paid ads (Meta, Google) stay with Claude Code on Tommy's Mac. Alfred keeps its jobs in HubSpot, email and Slack.
 
-## Install
+## Install (one paste)
 
 1. Open the **Grok** desktop app → **New chat (+)** → **Create new Bot**.
-2. Attach `tmec-grokbot.zip` (from Justin's team, or **Code → Download ZIP** on this repo).
-3. Send:
+2. Send:
 
    ```
-   Build my team from the attached zip. Follow START-HERE.md. This is Tommy's install for TMEC Services, my business account.
+   Download https://github.com/jbellsolutions/tmec-grokbot/releases/latest/download/tmec-grokbot.zip, unpack it, and follow START-HERE.md. This is Tommy's install for TMEC Services, my business account.
    ```
 
-4. Answer its questions. It walks you through every click, one at a time. For Justin's team's test run, send `This is Justin's test run. Follow START-HERE.md.` instead.
+   (If your bot can't download, attach the zip from the [latest release](https://github.com/jbellsolutions/tmec-grokbot/releases/latest) and send: `Build my team from the attached zip. Follow START-HERE.md. This is Tommy's install for TMEC Services, my business account.`)
+
+3. Answer its questions. It walks you through every click, one at a time. For Justin's team's test run, send `This is Justin's test run. Follow START-HERE.md.` instead.
 
 Everything is created **paused**. Routines switch on only when Tommy says yes, one at a time.
 
@@ -60,4 +61,4 @@ Everything is created **paused**. Routines switch on only when Tommy says yes, o
 
 Built and reviewed twice; not yet installed on a Grok account. Live milestones: M0 setup → M1 apps read-only → M2 every bot and routine created, paused → M3 preview (messages to Tommy only) → M4 first real sends → M5 cold email waves → M6 standing approvals.
 
-Built by Justin's team (Everyone Needs an AI Guy) with the client-build system, November 2026. Private.
+Built by Justin's team (Everyone Needs an AI Guy) with the client-build system, November 2026.
