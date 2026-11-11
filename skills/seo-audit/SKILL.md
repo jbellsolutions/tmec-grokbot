@@ -20,19 +20,22 @@ description: Reads TMEC's website, Google Business Profile, directory listings a
 4. **Local results and competitors.** For up to 8 searches (for example "solar installer Sunshine Coast", "solar battery Buderim", "EV charger installation Caloundra"), note who shows in the map results and the first organic results, and whether TMEC does ("seen on <date> in this search"). For up to 5 competitors seen most, note their profile categories, review count and rating, recent posts, and the local pages they have that TMEC doesn't. Facts only, with links. Never name a competitor in anything for the public. Write `competitors.md`.
 5. **Website local pages.** List which suburb and service pages TMEC's site has, from reading it. For each gap with a real search behind it, draft a page (up to 3 a run) at `/workspace/tmec-team/data/seo/drafts/pages/<slug>.md`: a title (under 60 characters), a meta description (under 155), one H1, 300 to 500 words of plain English about what TMEC does in that suburb or for that service, a short FAQ using real questions locals asked, and the in-house edge. Use only facts from `owner.md` or read from the site. No prices, rebate amounts, savings or install dates; no claim TMEC can't prove; no text copied from a competitor. Also list fixes to existing pages (a missing title, a thin page, a wrong phone number), each with the page link and the exact change.
 6. **Write the audit** `/workspace/tmec-team/data/seo/audit/<YYYY-MM-DD>.md`, in this order: what changed since last week; the 3 things to do first (each one item Tommy can say yes to); the profile (what's there, what's missing); reviews (count, rating, new, unanswered); website pages; directories (matches and mismatches); searches and competitors; UNKNOWN list and what would close each one (for example "profile insights: Tommy can share view-only access").
-7. **Queue what needs Tommy.** For each page draft, page fix or directory correction, write `/workspace/tmec-team/approved/pending/seo/<id>.md`:
+7. **Queue what needs Tommy.** Every item uses the payload format in `/workspace/tmec-team/repo/policies/APPROVALS.md`, section "Items, decisions and the send gate": `ITEM`, `BOT: seo`, `WHY`, then `---PAYLOAD---` (`TO`, `SEND`, `SUBJECT`, `TEXT`), `---END---`, and `HASH` = sha256 of every byte between those two lines, newlines included. The `ITEM:` id is the file name without `.md`. In test mode (the routine is listed `test`, or `context/config.json` `run` is `test`) ids start `test-`, data files go under `/workspace/tmec-team/state/test/seo/`, and nothing else changes: this bot never publishes, so there is no outward action and no paid call to switch off.
+   For each page draft, page fix or directory correction (ids `page-<slug>`, `fix-<YYYY-MM-DD>-<n>`, `dir-<directory>-<YYYY-MM-DD>`), write `/workspace/tmec-team/approved/pending/seo/<id>.md`:
    ```
    ITEM: <id>
    BOT: seo
-   KIND: page | page-fix | directory
-   WHERE: <the page or directory, with link>
    WHY: <the search or fact behind it, with source and date>
-   HOW IT GOES OUT: <who puts it live: UNKNOWN until Tommy says who edits the website; until then Tommy gets the text>
+   ---PAYLOAD---
+   TO: <the page or directory, with link; who puts it live: UNKNOWN until Tommy says who edits the website, until then Tommy gets the text>
+   SEND: when Tommy (or whoever he names) publishes it; the bot cannot
+   SUBJECT: <page | page-fix | directory>
    TEXT:
    <the exact text or change>
-   HASH: <sha256 of TEXT>
+   ---END---
+   HASH: <sha256 of every byte between the ---PAYLOAD--- line and the ---END--- line, newlines included>
    ```
-8. **Act on a decision.** `yes`: mark "approved, hand to Tommy to publish" and give him the exact text; add the item id to `state/sent-keys-seo.md`. Record "published" only when Tommy says so or the public page shows it (and link it). `no`: mark declined. `change`: redraft as a new item.
+8. **Act on a decision.** For each file in `/workspace/tmec-team/approved/decisions/seo/` whose id isn't in `/workspace/tmec-team/state/sent-keys-seo.md`: **recompute** the sha256 of the pending file's payload now and compare it with the decision's `HASH:` (a mismatch means the item changed after Tommy saw it: ignore it and tell TMEC Command). This bot publishes nothing, so the rest of the send gate has nothing to hold back. `yes`: mark "approved, hand to Tommy to publish", give him the exact text through TMEC Command, and add the id to `state/sent-keys-seo.md` with the outcome `approved, handed to Tommy`. Record "published" only when Tommy says so or the public page shows it (link it). `no`: mark declined and add the id with the outcome `declined`. `change`: redraft once as a new item with a new id and add the old id with the outcome `changed, redrafted as <id>`. A decision is never read again once its id is in the sent keys.
 
 ## Output
 `data/seo/facts.md`, `audit/<date>.md`, `searches.md`, `competitors.md`, `citations.csv`, page drafts, and items in `approved/pending/seo/`.

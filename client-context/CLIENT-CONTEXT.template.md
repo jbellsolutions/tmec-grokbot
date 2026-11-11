@@ -10,6 +10,14 @@ The real file (`CLIENT-CONTEXT.md`) is private: Justin's team attaches it at ins
 
 ## The business
 
+- Legal name and ABN: ASK
+- Electrical contractor licence number: ASK
+- Published business (postal) address for email footers: ASK
+- Reply-to address: ASK
+- TMEC contact block (phone, website) for emails: ASK
+- What a reply or post may offer (free quote review, site visit, a link): ASK
+- Referral reward for past customers, if any: ASK
+
 - What it sells, and to whom: ASK
 - Team (name, role; IDs are filled in after the apps connect): ASK
 
@@ -29,14 +37,21 @@ The real file (`CLIENT-CONTEXT.md`) is private: Justin's team attaches it at ins
 ## Partners
 
 - Service area: Gympie plus 10 km, south to the north side of the Brisbane River
-- Partner fee and its trigger (deposit, install or final invoice): ASK (the plan holds $500 + GST per referred sale; never quoted until the trigger is set)
+- Partner fee and its trigger (deposit, install or final invoice): ASK (proposed $500 + GST per referred sale, unconfirmed; never quoted until Tommy sets both)
+- Attribution window for a partner referral (starting value 90 days): ASK
 - The three insurance panel builders and the supervisor: ASK
 - Trades and businesses Tommy already knows: ASK
 - Reply inbox for partner replies: ASK
 
 ## Lead vendors
 
-- Current vendors, price per lead, how many installers each lead goes to: ASK
+- Current vendors, price per lead, how many installers each lead goes to (`lead_vendors`): ASK
+- Bought-lead baseline: cost per lead (`baseline_cost_per_lead_aud`, about 60 on the 28 Oct call) and close rate (`baseline_close_rate_pct`, mid-20s): confirm
+- Vendor Scout: research only, or draft vendor messages for Tommy's yes (`vendor_scout`, `vendor_messages`): ASK
+
+## Schedule
+
+- Where the install schedule lives and how Ops reads it (`schedule`): ASK
 
 ## Limits
 

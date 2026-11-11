@@ -30,7 +30,7 @@ The question behind it (Justin, 9 Nov call): **who deals with our same customer 
 | 9 | **Gets something back.** TMEC can return value: a fee, reports, referrals the other way, a better bill for their customer | 5 | Nothing obvious | A fee only | Two-way: referrals back, or a better offer for their customer |
 | 10 | **Proof we can show them.** A job, a review or a story they'd recognise | 5 | None yet | Generic | A job in their suburb, or for their kind of customer |
 
-Unknown scores 0, never half. A prospect with three or more unknowns goes to the research pile, not a list.
+Unknown scores 0, never half. On criterion 5, the 8 Nov call recorded that insurers' panel lists are on their websites; the 11 Nov check of RACQ, Suncorp, AAMI, QBE, Allianz, Youi and NRMA found only motor repairer schemes published. Score a panel claim only from the business's own pages, with the link. A prospect with three or more unknowns goes to the research pile, not a list.
 
 ## 3. Tiers
 
@@ -41,7 +41,7 @@ Unknown scores 0, never half. A prospect with three or more unknowns goes to the
 | 30 to 49 | **Nurture** | Newsletter-style updates only, after a yes, or a later wave |
 | Under 30 | **Out** | Not contacted. The reason is recorded |
 
-The trades' Dream 100 is the top of each ranked trade (`partner-types.md`): the ten best roofers, the ten best HVAC firms, and so on, scored here.
+The trades list is the top ten of each ranked trade (`partner-types.md`): the ten best roofers, the ten best HVAC firms, and so on, scored here. A trade business that scores 75 or more is Dream 100's, not the trades list's.
 
 ## 4. How the score is kept
 

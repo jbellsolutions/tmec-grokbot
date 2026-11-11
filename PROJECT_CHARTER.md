@@ -87,11 +87,11 @@ Every record has exactly one writer.
 
 | Record | Where | Sole writer |
 |---|---|---|
-| Tommy's facts and config | `context/owner.md`, `context/config.json` | TMEC Command (from the intake; Tommy confirms every change) |
+| Tommy's facts and config, including `run` and `live_sends` | `context/owner.md`, `context/config.json` | TMEC Command (from the intake; Tommy confirms every change; `live_sends` only on his words at M4) |
 | Team registry: bots, routines, connections, secret names (never values) | `context/team-registry.md` | TMEC Command |
 | Routine switches | `context/routines-on.md` | TMEC Command, on Tommy's yes |
 | Standing approvals | `context/standing-approvals.md` | TMEC Command, in Tommy's own words |
-| Stop switch | `state/EXTERNAL_WRITES_STOPPED` | Whichever bot hears "stop everything" creates it; only TMEC Command removes it, on Tommy's word |
+| Stop switch | `state/EXTERNAL_WRITES_STOPPED` | Whichever bot hears "stop everything" creates it and tells TMEC Command; only TMEC Command writes the pause jobs and removes it, on Tommy's word |
 | Ask ledger | `context/asks.md` | TMEC Command |
 | Decisions | `vault/Decisions.md` | TMEC Command |
 | Daily vault note | `vault/Daily/<date>.md` | TMEC Command |
@@ -99,16 +99,17 @@ Every record has exactly one writer.
 | Jobs done | `state/done-<bot>.md` | that bot |
 | Daily notes | `daily/<date>/<bot>.md` | that bot |
 | Items waiting on Tommy | `approved/pending/<bot>/` | that bot |
-| Tommy's answers | `approved/decisions/` | TMEC Command |
+| Tommy's answers | `approved/decisions/<bot>/` | TMEC Command, only after showing Tommy the payload |
+| Numbered lists shown to Tommy | `daily/<date>/list-<HHMM>.md` | TMEC Command |
 | Briefs | `daily/<date>/brief.md`, `daily/<date>/evening.md` | TMEC Command |
 | Radar leads and hand-off | `data/radar/` | Lead Radar |
 | Dream 100 list, messages and sends | `data/partners/dream100.csv`, `data/partners/dream100/` | Dream 100 |
 | Dream 500 lists, and its campaigns in the cold email tool (prefix `D500-`) | `data/partners/dream500/` | Dream 500 |
 | Trades list, and its campaigns (prefix `TRD-`) | `data/partners/trades.csv`, `data/partners/trades/` | Trades Outreach |
 | Partners who said yes (any list), their send packs, tagged enquiries and fees owed | `data/partners/active/`, `data/partners/handoff/`, `data/partners/payouts.csv` | Dream 100 (every fee waits on Tommy's yes; no bot pays) |
-| Opt-outs | `data/partners/opt-outs.csv` | Append-only: Dream 100, Dream 500 and Trades Outreach each add lines naming themselves; nobody edits or removes a line |
+| Opt-outs | `data/partners/opt-outs.csv` | Created empty by TMEC Command at setup; then append-only: Dream 100, Dream 500 and Trades Outreach each add lines naming themselves; nobody edits or removes a line |
 | Sent keys | `state/sent-keys-<bot>.md` | that bot |
-| CRM sweep, follow-up and reactivation drafts and batches | `data/crm/` | CRM & Reactivation |
+| CRM sweep, follow-up and reactivation drafts and batches, customer suppression, partner-tagged won deals | `data/crm/` (incl. `suppression.csv`, `partner-sales.md`) | CRM & Reactivation |
 | HubSpot contacts and deals | HubSpot | Alfred (not on Grok Bot); CRM & Reactivation only reads them |
 | Reactivation batches in HubSpot marketing email | HubSpot marketing email | CRM & Reactivation, each batch on Tommy's yes (M4) |
 | Content calendar, drafts and newsletter issues | `data/content/` | Content Studio |

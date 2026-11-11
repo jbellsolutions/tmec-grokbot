@@ -9,7 +9,7 @@ The answer to "what would it generate?" is a scoreboard, not a promise. Tommy's 
 
 ## Inputs
 - `/workspace/tmec-team/context/owner.md`: Tommy's bought-lead figures (cost per lead, close rate). Missing: the line is UNKNOWN and says so.
-- Counts for the week (Saturday to Friday, Brisbane), by source, from files and HubSpot read only through Connect apps (counts and dates only, no personal details):
+- Counts for the week (Saturday to Friday, Brisbane), by source, from files and HubSpot, read only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only HubSpot route this bot has: not Connect apps; counts and dates only, no personal details):
   - bought leads: HubSpot, where a source tag exists; spend is UNKNOWN unless Tommy has given it
   - radar: `/workspace/tmec-team/data/radar/handoff/` and HubSpot
   - partners, by list (Dream 100, Dream 500, Trades): `/workspace/tmec-team/data/partners/` and the partner code in HubSpot
@@ -18,6 +18,9 @@ The answer to "what would it generate?" is a scoreboard, not a promise. Tommy's 
   - SEO: `/workspace/tmec-team/data/seo/`
   - paid ads (Meta, Google): only figures Tommy's Claude Code reports, in a job in `/workspace/tmec-team/requests/to-forecast/`. Nothing reported: UNKNOWN.
 - The last scoreboard in `/workspace/tmec-team/data/forecast/`, for the cumulative table.
+
+## Test mode
+If the routine is listed `test` in `context/routines-on.md`, or `context/config.json` `run` is `test`: write the scoreboard, `rebates.md` and notes under `/workspace/tmec-team/state/test/forecast/` instead of `data/forecast/` (Content Studio and Ops read the live files, so a test run must not replace them), start item ids with `test-`, and leave the live sent keys alone. Reading public pages and HubSpot counts is free, so it still happens. This bot makes no paid call and sends nothing.
 
 ## Definitions
 - **Lead:** a person with contact details who asked for, or accepted, a conversation about a quote, created in HubSpot in the window. A radar post is not a lead until it is in HubSpot.
@@ -33,8 +36,23 @@ The answer to "what would it generate?" is a scoreboard, not a promise. Tommy's 
 4. Set each source against Tommy's line (about 60 a lead; mid-20s percent). Label it "Tommy's estimate". Add two break-even figures per source: the cost per lead it needs to match his cost per sale at its own close rate, and the close rate it needs at its own cost per lead. These are thresholds, not predictions.
 5. Labels, only these: `TOMMY'S ESTIMATE` (his number, with the call), `ASSUMPTION` (needs Tommy's say-so or a cited public benchmark, else UNKNOWN), `MEASURED (n=<leads>, weeks <a> to <b>)`, `UNKNOWN`. An assumption is used only beside a break-even figure, never in a sentence about what TMEC will get. A source flips to MEASURED at 30 leads and 3 weeks of known spend; keep the old value beside it.
 6. Write `/workspace/tmec-team/data/forecast/scoreboard-<YYYY-MM-DD>.md`: the line to beat; one table (source, leads, quotes, sales, cost per lead, close rate, cost per sale, n, label); the cumulative table; "UNKNOWN this week" with each reason; the break-even table.
-7. If the measured bought-lead line has 30 or more leads, file a pending item in `/workspace/tmec-team/approved/pending/forecast/`: "replace your stated numbers with the measured ones?" Only TMEC Command changes `owner.md`, in Tommy's words.
-8. Put an 8-line summary in `/workspace/tmec-team/daily/<today>/forecast.md`.
+7. If the measured bought-lead line has 30 or more leads, file a pending item `/workspace/tmec-team/approved/pending/forecast/fc-<YYYY-MM-DD>-measured-line.md` (the `ITEM:` id is the file name without `.md`), in the shared item format (`/workspace/tmec-team/repo/policies/APPROVALS.md`, "Items, decisions and the send gate"):
+   ```
+   ITEM: <id>
+   BOT: forecast
+   WHY: <one line, with the source and date behind it>
+   ---PAYLOAD---
+   TO: TMEC Command, for Tommy to decide (nothing goes out from this bot)
+   SEND: <show Tommy now | Tuesday if filed on a Monday>
+   SUBJECT: none
+   TEXT:
+   <the question, and the facts behind it>
+   ---END---
+   HASH: <sha256 of every byte between the ---PAYLOAD--- line and the ---END--- line, newlines included>
+   ```
+   The question in `TEXT` is "replace your stated numbers with the measured ones?". Only TMEC Command changes `owner.md`, in Tommy's words.
+8. Put an 8-line summary in `/workspace/tmec-team/daily/<today>/forecast.md`. If the Rebate watch routine already wrote that note today (it can, when the 1st is a Monday), **append** your section and never overwrite it.
+9. **Decisions.** For each file in `/workspace/tmec-team/approved/decisions/forecast/` whose id isn't in `/workspace/tmec-team/state/sent-keys-forecast.md`: recompute the sha256 of the pending item's payload now and compare it with the decision's HASH (a mismatch means the item changed after Tommy saw it: ignore it and tell TMEC Command). `yes`: note it and tell TMEC Command to carry it out (this bot changes nothing outside its own files, so no send gate applies); `no`: note it declined; `change`: refile once as a new item. Add the id and the outcome to the sent keys so it is never read twice.
 
 ## Answering "what would it generate?"
 1. "I can't give you a number I'd stand behind. Nobody can, before a source has run."

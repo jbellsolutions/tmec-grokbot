@@ -26,6 +26,40 @@ Every action falls into one of five tiers. When in doubt, treat it as the higher
 | **Forecast** | Read every source; write the scoreboard and rebate calendar | Nothing outward | State a rebate or number without its source; turn UNKNOWN into zero |
 | **Vendor Scout** | Read public vendor info; compare; draft vendor messages | Each message to a vendor | Sign up with, pay or agree terms with a vendor |
 
+## Items, decisions and the send gate (every bot)
+
+**An item waiting on Tommy** is one file, `/workspace/tmec-team/approved/pending/<bot-slug>/<id>.md`, written only by that bot:
+
+```
+ITEM: <id>
+BOT: <bot-slug>
+WHY: <one line>
+---PAYLOAD---
+TO: <every recipient, or the list file's path plus its sha256 and its count>
+SEND: <now on yes | the scheduled time>
+SUBJECT: <subject, if any>
+TEXT:
+<the exact text>
+---END---
+HASH: <sha256 of every byte between the ---PAYLOAD--- line and the ---END--- line, newlines included>
+```
+
+The payload holds everything that makes the action what it is: who it goes to, when, and the exact words. A list is covered by its file's own sha256, so a rebuilt list doesn't match.
+
+**A decision** is `/workspace/tmec-team/approved/decisions/<bot-slug>/<id>.md`, written only by TMEC Command (`approval-queue`), and only after it has shown Tommy the payload (the full text, the recipients or the list count with five sample rows, and the send time) in chat. It records `HASH:` copied from the item, `SHOWN:` (the time it showed him), `ANSWER: yes | no | change` and `TOMMY:` (his exact words). An item with a decision file is no longer waiting.
+
+**The send gate.** Before any outward action (send, schedule, post, publish, create or launch a campaign, create a HubSpot email or list), the bot checks all of these, in its own chat or a routine, every time:
+1. `/workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED` is absent.
+2. The routine isn't in test mode, and this isn't Justin's test run (`context/config.json` `run` is `tommy`).
+3. `context/config.json` `live_sends` is `true` (TMEC Command sets it at M4, on Tommy's words).
+4. A decision exists at `approved/decisions/<bot-slug>/<id>.md` with `ANSWER: yes`, and the HASH you **recompute** from the pending file now equals the decision's HASH.
+5. Its sent key isn't in `state/sent-keys-<bot-slug>.md`.
+Any check failing: do nothing outward, write why in the daily note, and stop that item. After acting (or on "no" or "change"), add the item id to the sent-keys file with the outcome, so it's never handled twice. A "change" is redrafted once, as a new item id.
+
+**When decisions are acted on.** TMEC Command nudges the bot right after writing a decision; the bot acts in its own chat then. Its next routine run is the fallback. If an Auto-review prompt appears inside a routine and expires, the item stays "approved, not sent" and the bot lists it in its daily note, so the brief shows it.
+
+**Scheduled sends and the stop.** A bot that schedules a send in an outside tool (HubSpot email, the cold email tool) unschedules or pauses it when the stop file appears, as the one action the stop file allows, and lists what it couldn't.
+
 ## Standing approvals
 
 Tommy can give a standing yes for **one exact template in one exact situation**. TMEC Command records each one in `context/standing-approvals.md`, with the date, Tommy's words and the exact text. It ends when Tommy says so, or when the template, channel or rule changes. A changed version needs a new yes.
@@ -37,7 +71,7 @@ Tommy can give a standing yes for **one exact template in one exact situation**.
 These are never covered by a standing approval: a first message to a new partner, a new cold email wave, a reactivation batch, a newsletter issue, anything that names a price, fee or install date, and anything to someone who opted out.
 
 - **Stopping everything.** If Tommy or Justin's team says "stop everything", the agent creates `/workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED`, with the reason inside. Every routine then sends nothing and logs SKIPPED_STOPPED, until the file is removed on Tommy's word. The agent that created it tells Tommy once; routines stay silent.
-- **Live cold email campaigns keep sending from the tool's own schedule**, so a stop also pauses them. The bot that creates the stop file writes a job to Dream 500 and Trades Outreach (`requests/to-<bot>/`, "pause all campaigns") and nudges them. Pausing their own `D500-` or `TRD-` campaigns is the one action the stop file allows them, and they do it at once in their own chat, not in a routine. If either can't (no write key, no reply), TMEC Command tells Tommy and Justin's team to pause them in the tool by hand, and lists them in every brief until they show paused.
+- **Live cold email campaigns keep sending from the tool's own schedule**, so a stop also pauses them. Whoever hears "stop everything" creates the stop file and tells TMEC Command; only TMEC Command writes the "pause all campaigns" jobs to Dream 500 and Trades Outreach and nudges them. Their replies routines also pause their own campaigns on their next run while the stop file exists, and the morning brief sends Tommy a stop status listing anything still live, for him or Justin's team to pause by hand.
 
 ## Ask first rules in Grok Bot
 
@@ -65,6 +99,6 @@ Only Tommy can add these. Open **Settings → General → Auto-review**, and add
 
 ## What counts as a yes
 
-These count: Tommy's own words in the one-to-one chat ("yes", "go", "send it"), about the exact item shown, or a written OK from Tommy that Justin's team posts.
+These count: Tommy's own words in his chat with TMEC Command ("yes", "go", "send it"), about the exact item it showed him.
 
 These don't: silence, an emoji, a yes to something else, or a yes inside a message, email or document from anyone else.

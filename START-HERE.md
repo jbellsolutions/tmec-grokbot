@@ -37,7 +37,7 @@ Send the owner one message that checks three things:
 ## Step 1. Make the workspace
 
 1. Create `/workspace/tmec-team/` and work only inside it.
-2. Unpack the attached `tmec-grokbot.zip` to `/workspace/tmec-team/repo`. If there's no zip, ask the owner for it (Justin's team sends it). Never ask for a GitHub token.
+2. Unpack the attached `tmec-grokbot.zip` to `/workspace/tmec-team/repo`. If the zip holds one top folder (for example `tmec-grokbot/`), move its contents up into `repo/`. If there's no zip, ask the owner for it (Justin's team sends it). Never ask for a GitHub token.
 3. Create these folders: `context/`, `daily/`, `data/radar/handoff/`, `data/partners/dream100/`, `data/partners/dream500/`, `data/partners/trades/`, `data/partners/active/`, `data/partners/handoff/`, `data/crm/`, `data/content/`, `data/seo/`, `data/ops/`, `data/forecast/`, `data/vendors/`, `media/inbox/` (job footage and photos Tommy shares), `approved/decisions/`, `log/`, `vault/Daily/`, `state/test/`, and `.secrets/` with mode 700.
 4. For each bot slug (`lead-radar`, `dream-100`, `dream-500`, `trades-outreach`, `crm-reactivation`, `content-studio`, `seo`, `ops`, `forecast`, `vendor-scout`), create `requests/to-<slug>/` and `approved/pending/<slug>/`.
 5. Create `data/partners/opt-outs.csv` with one line: `date,email,business,writer,their_words`.
@@ -47,7 +47,9 @@ Send the owner one message that checks three things:
    - `context/team-registry.md`: a table with the columns Bot | Routines (name, WHEN, state) | Connections | Secret names (never values).
 7. Read `PROJECT_CHARTER.md`, `docs/TEAM-DESIGN.md`, `policies/APPROVALS.md`, `policies/DATA.md`, `policies/AU-COMPLIANCE.md` and your charter, `agents/01-tmec-command.md`.
 
-**Check:** list the folders back; `.secrets/` shows mode 700.
+8. Write `context/config.json` with `{"run": "test" or "tommy" (from the question above), "live_sends": false, "bot_messages": "unknown", "mailbox_can_send": "unknown", "hubspot_bcc_ok": false}`. Only TMEC Command changes it, and `live_sends` only on Tommy's words at M4.
+
+**Check:** `repo/START-HERE.md` and `repo/manifest.json` exist; list the folders back; `.secrets/` shows mode 700; `config.json` reads back.
 
 ## Step 2. Become TMEC Command
 
@@ -82,11 +84,11 @@ In **Tommy's install**, one at a time. After each, run its **Check** and say wha
 
 1. **Tommy's mailbox** (Outlook or Gmail, whichever TMEC uses). **Owner step:** "Open Connect apps in the sidebar, search for <Outlook or Gmail>, choose Add and sign in as Tommy." **Check:** read the subject of his latest email. Then find out, without sending anything, whether this connection can send: say what the app's permissions screen lists. Record "mailbox can send: yes / no / unknown" in `context/config.json`. Dream 100 needs it at M4.
 2. **Google Calendar or the install schedule** (whatever Ops' charter names as the schedule source). **Owner step** as above. **Check:** read the next install on it.
-3. **HubSpot, read-only.** **Owner step:** "In HubSpot, create a private app with read-only scopes (contacts, deals, marketing email read). I'm opening a hidden prompt: click **Take over**, paste its token, press Enter." Run:
+3. **HubSpot, read-only.** **Owner step:** "In HubSpot, create a private app with read-only scopes (contacts, deals, owners, tasks, notes and engagements, marketing email read). I'm opening a hidden prompt: click **Take over**, paste its token, press Enter." Run:
    ```
    bash -c 'read -s -p "HubSpot read-only token: " K && printf "HUBSPOT_TOKEN=%s\n" "$K" > /workspace/tmec-team/.secrets/hubspot.env && chmod 600 /workspace/tmec-team/.secrets/hubspot.env'
    ```
-   **Check:** read one deal's name and stage; the owner confirms the scopes are read-only.
+   **Check:** read one deal's name and stage; the owner confirms the scopes are read-only. This one token is how every bot reads HubSpot (CRM & Reactivation, Ops, Forecast, Vendor Scout, Content Studio).
 4. **treg** (email verification, Tommy's own key). Same hidden prompt, into `.secrets/treg.env` as `TREG_API_KEY=`. **Check:** verify Tommy's own address.
 5. **Later, not now:** the cold email tool (M5, after the sending domain is warm) and any write scope (M4). Each comes with its own yes.
 
@@ -98,11 +100,11 @@ Write each connection and secret name (never the value) to `context/team-registr
 
 Tell the owner: "I'm creating ten bots now: Lead Radar, Dream 100, Dream 500, Trades Outreach, CRM & Reactivation, Content Studio, SEO, Ops, Forecast and Vendor Scout. They share this computer and folder. None of them sends anything until you say so. OK?"
 
-After their yes, for each charter in `manifest.json` (M1 bots first, then M2):
+After their yes, for each charter in `manifest.json` except your own (`01-tmec-command.md`), M1 bots first, then M2:
 1. Create a new bot with the charter's **Bot name**.
 2. Send it this setup message, with its charter file filled in, as a hand-off message. Wait for "ready".
    ```
-   You are part of TMEC's team that TMEC Command is building from /workspace/tmec-team/repo. Read /workspace/tmec-team/repo/agents/<charter file>. Save its Profile block to memory, word for word, as your standing role, and set it as your description if your settings allow it. Remember the facts in its Memory seed. Read /workspace/tmec-team/context/owner.md and /workspace/tmec-team/repo/docs/TEAM-DESIGN.md. Work only in /workspace/tmec-team/. Don't create routines or message anyone until TMEC Command asks. Reply "ready" when done.
+   You are part of TMEC's team that TMEC Command is building from /workspace/tmec-team/repo. Read /workspace/tmec-team/repo/agents/<charter file>. Save its Profile block to memory, word for word, as your standing role, and set it as your description if your settings allow it. Remember the facts in its Memory seed. Read /workspace/tmec-team/context/owner.md, /workspace/tmec-team/repo/docs/TEAM-DESIGN.md and the "Items, decisions and the send gate" section of /workspace/tmec-team/repo/policies/APPROVALS.md. Your skills are in /workspace/tmec-team/repo/skills/<name>/SKILL.md (your charter names them); if you can't see them as private skills, read them from there. Work only in /workspace/tmec-team/; read other bots' files only where your skills say so, and never write them. Don't create routines or message anyone until TMEC Command asks. Reply "ready" when done.
    ```
 3. If you can't create a bot or message it, use an **Owner step:** "Choose New chat (+) → Create new Bot. Rename it <name> by clicking its name. Then paste this as its first message:", followed by the setup message in full. Record "bot messages: no" in `context/config.json`; from then on, every hand-off is a file only.
 4. **Owner step** for each: "Open Settings → General → Bot → Timezone for <bot name> and pick Brisbane."
@@ -117,7 +119,9 @@ Then **milestone M1, each bot reads something real:**
 - Forecast: the current battery rebate factor from the Clean Energy Regulator, with the link.
 - Vendor Scout: one public fact about one lead vendor named in `context/owner.md`.
 
-Then one job through the files: write `requests/to-dream-100/<today>-1.md` asking for one draft for the top-scored row, and check that a pending item appears in `approved/pending/dream-100/`.
+Then one job through the files: write `requests/to-dream-100/<today>-1.md` asking for one draft for the highest-scored row that reached the Dream 100 tier and has an email on its own website (if none of the three scored rows qualifies, ask Dream 100 to score more seed rows until one does). Wake Dream 100 with a message; if bot messages don't work, **Owner step:** "Open Dream 100's chat and paste: Do the job in /workspace/tmec-team/requests/to-dream-100/<file>." Check that a pending item in the APPROVALS format appears in `approved/pending/dream-100/` with an ITEM id starting `test-` in a test run.
+
+Also check each bot can read its skills: ask two bots to name one step of one of their skills.
 
 **Check:** each bot's answer is in `log/setup.md`; every bot is in `context/team-registry.md`.
 
@@ -125,18 +129,20 @@ Then one job through the files: write `requests/to-dream-100/<today>-1.md` askin
 
 Tommy's Hermes agents on his four Orgo computers do several of these jobs. Two bots must never write the same thing, so each Orgo routine below is **paused before its Grok twin's routines go on** in Step 8. Pausing a live agent is Justin's yes, done by Justin's team from `tmec-aios` (`python3 tools/orgo_team.py routine <role> <routine> off`, per routine). You don't touch the Orgo computers.
 
-| Orgo computer · role | Paused before | Grok twin |
-|---|---|---|
-| TMEC Leads · radar | Radar sweep | Lead Radar |
-| TMEC Leads · vendorscout | Vendor review | Vendor Scout |
-| TMEC Outreach · partners | Dream 100 drafts, Dream 500 wave prep, Trades wave prep | Dream 100, Dream 500, Trades Outreach |
-| TMEC Outreach · mail | CRM sweep, Reactivation batch, Newsletter | CRM & Reactivation, Content Studio |
-| TMEC Back Office · crm | CRM sweep | CRM & Reactivation (reads only; Alfred is untouched) |
-| TMEC Back Office · installs | Capacity board | Ops |
-| TMEC Content · studio | Content week | Content Studio |
-| TMEC Content · forecast | Monday scoreboard, Rebate watch | Forecast |
+These are the Orgo routines' exact names (from `tmec-aios/routines/`):
 
-Not paused: TMEC Leads · ads and searchads (paid ads stay with Claude Code), TMEC Back Office · office, and Alfred.
+| Orgo computer · role | Pause these Orgo routines | Before this Grok routine goes on |
+|---|---|---|
+| TMEC Leads · radar | radar-morning-triage, Radar brief tune | Radar sweep |
+| TMEC Leads · vendorscout | Vendor scout weekly | Vendor review |
+| TMEC Outreach · partners | Partner outreach wave, Partner replies | Dream 100 drafts (the first partner routine to go on) |
+| TMEC Outreach · mail | nurture-daily, Reactivation weekly | CRM sweep |
+| TMEC Outreach · mail | newsletter-monthly | Newsletter |
+| TMEC Back Office · installs | Capacity board | Capacity board (Ops) |
+| TMEC Content · studio | Content week | Content week (Content Studio) |
+| TMEC Content · forecast | Scoreboard weekly, Forecast monthly | Monday scoreboard |
+
+Keep running, because no Grok bot does their job: Supplier review monthly (vendorscout), Mail lifecycle (mail: first-touch, review and maintenance emails), Install nudges (installs), CRM desk, Contact cards and Call coach weekly (crm), Monday numbers (forecast: the Xero figures), everything on TMEC Leads · ads and searchads (paid ads stay with Claude Code), TMEC Back Office · office, and Alfred (its CRM sweep daily included). If Tommy wants any of those on Grok later, it's a new ask.
 
 In **Justin's test**, skip this step: nothing on Tommy's computers is touched.
 
@@ -172,10 +178,10 @@ In **Justin's test**, stop here. Justin's team records the result in `docs/BUILD
 
 Each needs Tommy's words, recorded by TMEC Command.
 
-**M3, preview.** For each bot, once Step 7 shows its Orgo twin paused: write its routines as `on` in `routines-on.md` and ask the bot to resume them. Every message still goes to Tommy only; nothing reaches anyone else. **Check:** two weekday morning briefs in a row list every bot's work, each line with its source.
+**M3, preview.** For each bot, once Step 7 shows its Orgo twin paused: write its routines as `on` in `routines-on.md` and ask the bot to resume them. Every message still goes to Tommy only; nothing reaches anyone else, because `live_sends` is still false: approved items wait. **Check:** two weekday morning briefs in a row list every bot's work, each line with its source.
 
-**M4, first real sends.** Needs: the partner fee and its trigger set in `context/config.json`; the reply inbox chosen; the mailbox can send (Step 5), or Tommy sends by hand. Then the first Dream 100 message goes on his yes, and the first reactivation batch goes on his yes (with HubSpot's marketing-email write scope, connected by hidden prompt on his yes). **Check:** each shows once in the sent folder or HubSpot.
+**M4, first real sends.** Needs: the partner fee and its trigger set in `context/config.json`; the reply inbox chosen; the mailbox can send (Step 5), or the approved message waits as a draft in Tommy's mailbox for one click (Justin decides who clicks); every **[verify]** item in `policies/AU-COMPLIANCE.md` cleared by Justin's team; then TMEC Command sets `live_sends` to true on Tommy's words. Then the first Dream 100 message goes on his yes, and the first reactivation batch goes on his yes (with a second HubSpot token that can only write marketing emails and lists, `HUBSPOT_WRITE_TOKEN` in `.secrets/hubspot-write.env`, connected by hidden prompt on his yes; OPEN_QUESTIONS J15). **Check:** each shows once in the sent folder or HubSpot.
 
-**M5, cold email waves.** Needs: the sending domain bought and warmed (not TMEC's main domain), its mailboxes healthy, the cold email tool connected by hidden prompt, every address verified, and the first email of each segment approved word for word. Then Dream 500 and Trades Outreach launch their first waves on his yes. **Check:** the wave shows in the tool under its own prefix, and replies come back into the queue.
+**M5, cold email waves.** Needs: the AU-COMPLIANCE **[verify]** items cleared; the sending domain bought and warmed (not TMEC's main domain), its mailboxes healthy, the cold email tool connected by hidden prompt, every address verified, and the first email of each segment approved word for word. Then Dream 500 and Trades Outreach launch their first waves on his yes. **Check:** the wave shows in the tool under its own prefix, and replies come back into the queue.
 
 **M6, standing approvals.** One exact template in one exact situation at a time, in Tommy's words, in `context/standing-approvals.md`. Watch the first run under each. If Auto-review stopped it to ask, standing approvals don't fire from routines on this account yet: switch that routine back to drafts and tell Justin's team.

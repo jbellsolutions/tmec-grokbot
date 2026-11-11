@@ -24,11 +24,11 @@ TMEC Command asks these one at a time during the intake (`getting-started`), or 
 | 11 | Is Origin Energy in, given it owns SolarQuotes? | Dream 100 | 110 |
 | 12 | Does air conditioning come off TMEC's website, so air-con firms don't see TMEC as a competitor? | Dream 100, Trades Outreach, SEO | 121 |
 | 13 | Can HubSpot send marketing email through its API on your plan, and which contacts are marketing contacts (it can cost more)? | Reactivation, newsletter | 116 |
-| 14 | Should quiet-quote follow-ups go through HubSpot marketing email, or from the sales reps' own mailboxes? | CRM & Reactivation | 23 |
+| 14 | Should quiet-quote follow-ups go through HubSpot marketing email, or from the sales reps' own mailboxes? (Saved as `quote_followup_route`; until set, nothing is sent and the batch comes to you.) | CRM & Reactivation | 23 |
 | 15 | Texts through HubSpot or Dialpad? | CRM & Reactivation | 117 |
 | 16 | Reactivation: you set twice a week for four weeks, then every two weeks. Is "one batch drafted each Wednesday, with a second send day when due" right? What's the referral reward, and how far back may we write (starting value: 24 months since last two-way contact)? | Reactivation | 113 |
 | 17 | Who passes the "add to HubSpot" list to Alfred: you, or an inbox Alfred watches? | Radar buyers reaching HubSpot | 9, 26 |
-| 18 | May Vendor Scout draft messages to vendors for your yes, or research only? Which business is "the quote company"? | Vendor Scout | 4 |
+| 18 | May Vendor Scout draft messages to vendors for your yes, or research only? ("The quote company" is The Quote Company, 8 Nov call.) | Vendor Scout | 4 |
 
 ## For M2 and later
 
@@ -54,6 +54,13 @@ TMEC Command asks these one at a time during the intake (`getting-started`), or 
 | J6 | A paid rank tracker for SEO: buy one or not, and who pays? | SEO |
 | J8 | The 15% hold-out in each wave (kept from the old Partners plan so results can be compared): keep it or set it to 0? | Dream 500, Trades Outreach |
 | J9 | How is the sending domain's daily volume split between Dream 500 and Trades Outreach? Starting value: half each | M5 |
+| J10 | If Tommy's mailbox can't send through Grok's Connect apps, approved Dream 100 messages wait as drafts in his mailbox for one click. Does Tommy click, or does your team? (He won't write or contact them himself.) | Dream 100 at M4 |
+| J11 | HubSpot BCC logging on Dream 100 sends: check first that BCC doesn't auto-create contacts (Alfred writes contacts). Set `hubspot_bcc_ok` true only after | Dream 100 |
+| J12 | Scope change to accept or reverse: the TMEC page promised CRM writes after Tommy's yes and radar leads landing in the CRM; here CRM & Reactivation only reads HubSpot, and new leads go on a list Tommy passes to Alfred | CRM & Reactivation, Lead Radar |
+| J13 | Purchased leads about 12 months old: the 8 Nov call recorded "we have consent"; this package holds vendor leads with no TMEC contact out of reactivation until you decide | Reactivation |
+| J14 | Who clears the [verify] items in `policies/AU-COMPLIANCE.md` before the first live send? | M4, M5 |
+| J15 | HubSpot writes at M4 (reactivation and newsletter lists and emails): a second private-app token with only marketing email and list write scopes, in `.secrets/hubspot-write.env` as `HUBSPOT_WRITE_TOKEN`, or your team creates each approved email from the bot's ready-to-paste file? | M4 |
+| J16 | Can Grok's Connect apps read the TMEC partner inbox, for forwarded partner replies? | Dream 100 |
 | J7 | One HubSpot key shared by CRM & Reactivation and Content Studio, kept apart by the `REACT-` and `NEWS-` name prefixes: acceptable? | M4 |
 
 ## Owed by Justin's team

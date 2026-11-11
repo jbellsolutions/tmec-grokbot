@@ -42,6 +42,7 @@ Everything TMEC sends that promotes TMEC, including a "news" newsletter, a quote
 - CRM & Reactivation emails a vendor lead only when TMEC has its own evidence (it sent a quote, they replied, they spoke with a salesperson and it is logged).
 - A vendor lead with no TMEC contact is **unknown**: not emailed, listed for Tommy as "held: no consent evidence".
 - Do not send an email asking for permission. That email is itself a commercial message.
+- **What the 8 Nov call recorded, and what this package does about it.** The 8 Nov call digest (`source/digests/2026-11-08.md`) records a decision: Justin told Claude "we have consent" for 12-month-old purchased leads, and Tommy agreed. This package cannot see any consent evidence for a vendor lead: HubSpot shows where a lead came from, not what the person agreed to, and a vendor's own statement is not enough on its own (above). So, until Justin decides whether and how that statement may be relied on, every vendor lead with no TMEC contact on record is held: not emailed, listed for Tommy as "held: no consent evidence". Both facts stand side by side here, and the question to Justin is in `OPEN_QUESTIONS.md` (consent for 12-month-old purchased leads).
 - Each vendor's terms on how installers may contact leads: **[verify]** per vendor. Tommy or Justin's team reads them and records the answer in `data/vendors/` (one line per vendor, kept by Vendor Scout).
 
 **Sender identification.** Every email and SMS carries the business's legal name or trading name plus ABN, and a contact route that works. The footer and the SMS sign-off use these placeholders, filled from `context/owner.md`; if any is missing the message is not drafted (NO_CLIENT_SOURCE): `{business_legal_name}`, `{abn}`, `{contact_phone}`, `{reply_to}`, `{postal_address_line}`, `{electrical_licence_no}`.
@@ -50,7 +51,7 @@ Everything TMEC sends that promotes TMEC, including a "news" newsletter, a quote
 - Email: a visible link (`{unsubscribe_link}`) once the sending platform provides one. Until then, the plain line "Reply UNSUBSCRIBE and I will take you off straight away", with each sending bot reading replies every run **[verify that a reply-based method meets the ACMA fact sheet]**.
 - SMS: "Reply STOP to opt out."
 - Free, no login, no extra form, no "tell us why".
-- When someone opts out: the bot that sees it adds them to its suppression file in the same run (CRM & Reactivation: `data/crm/suppression.csv`, for customers and leads; Dream 100, Dream 500 and Trades Outreach: `data/partners/opt-outs.csv`, for partner businesses, append-only), stops any sequence for them, and puts a "for CRM & Reactivation" unsubscribe line in its daily note. No bot re-adds them. Only the person can opt back in, in their own words.
+- When someone opts out: the bot that sees it adds them to its own file in the same run and stops any sequence for them. CRM & Reactivation writes `data/crm/suppression.csv` (customers and leads), and it is the **only** bot that does. Dream 100, Dream 500 and Trades Outreach append only to `data/partners/opt-outs.csv` (partner businesses; append-only, each line names its writer) and never write `data/crm/suppression.csv`. When a partner bot sees an opt-out that also concerns a customer or lead, it puts a "for CRM & Reactivation: unsubscribe <who>" line in its own daily note; CRM & Reactivation reads those lines at its sweep (or TMEC Command passes it as a job) and writes the suppression line itself. In test mode no suppression file is written. No bot re-adds them. Only the person can opt back in, in their own words.
 - Opting out of the newsletter is treated as opting out of all TMEC marketing email unless they clearly say otherwise.
 - Never ask a person to confirm their unsubscribe.
 
@@ -61,9 +62,9 @@ Everything TMEC sends that promotes TMEC, including a "news" newsletter, a quote
 > **Named consent basis for a first email to a business at its published address: `published_business_address`.**
 > Cleared by Justin, 2026-11-05. Dream 500 and Trades Outreach may send first-touch emails to a business at its published address, where the page doesn't say no to marketing and the message is about that business's work.
 
-A trade's reply to TMEC is express consent for follow-up about that reply only. Every first-touch email still carries sender identification, the licence line and a working unsubscribe, and every opt-out lands in `data/partners/opt-outs.csv` (and in `data/crm/suppression.csv` too if the person is also a customer or lead) in the run it is read.
+A trade's reply to TMEC is express consent for follow-up about that reply only. Every first-touch email still carries sender identification, the licence line and a working unsubscribe, and every opt-out lands in `data/partners/opt-outs.csv` (append-only) in the run it is read. If the person is also a customer or lead, the partner bot adds a "for CRM & Reactivation" line to its daily note, and CRM & Reactivation writes `data/crm/suppression.csv`: partner bots never write that file.
 
-**SMS.** SMS is a commercial electronic message under the Spam Act, so the same consent and opt-out rules apply, with "Reply STOP". The Do Not Call Register covers voice calls and faxes, not SMS (ACMA, via search extract [verify]). Sending SMS needs a sender name or number that TMEC owns. Alphanumeric sender IDs may need registering on the ACMA SMS Sender ID Register **[verify]**. Mail drafts SMS; it sends none until Tommy says yes and a sending route exists.
+**SMS.** SMS is a commercial electronic message under the Spam Act, so the same consent and opt-out rules apply, with "Reply STOP". The Do Not Call Register covers voice calls and faxes, not SMS (ACMA, via search extract [verify]). Sending SMS needs a sender name or number that TMEC owns. Alphanumeric sender IDs may need registering on the ACMA SMS Sender ID Register **[verify]**. CRM & Reactivation drafts SMS; it sends none until Tommy says yes, a sending route exists and the send gate passes.
 
 **What the email bots never do:** send to anyone whose consent basis is unknown; send from Justin's sending accounts; use a "from" name that hides TMEC; hide or shrink the unsubscribe; send after an opt-out; promise results.
 
@@ -135,10 +136,10 @@ A Queensland electrical contractor's advertising must state the licensed name (o
 | Record | Where | Who writes it |
 |---|---|---|
 | Consent basis and evidence, per contact | The CRM (`consent_basis`, `consent_evidence`) | Alfred writes HubSpot; CRM & Reactivation records the evidence it reads, in `data/crm/` |
-| Opt-outs learned by email or SMS | `data/crm/suppression.csv` (customers and leads); `data/partners/opt-outs.csv` (partner businesses) | CRM & Reactivation; Dream 100, Dream 500 and Trades Outreach (append-only) |
+| Opt-outs learned by email or SMS | `data/crm/suppression.csv` (customers and leads); `data/partners/opt-outs.csv` (partner businesses) | CRM & Reactivation alone writes the first; Dream 100, Dream 500 and Trades Outreach append to the second (append-only) and never write the first |
 | What was sent, to whom (contact id), which template | The sending bot's `daily/<date>/<bot>.md` and `state/sent-keys-<bot>.md`, then HubSpot through Alfred | Each sending bot writes its own; CRM & Reactivation reads them |
 | Media consent for faces and homes | The shoot note in `data/content/shoots/` | Content Studio |
-| Approvals (yes, standing templates) | `approved/pending/<bot>/`, `approved/decisions/`, `context/standing-approvals.md` | TMEC Command |
+| Approvals (yes, standing templates) | `approved/pending/<bot>/` (the bot), `approved/decisions/<bot>/<id>.md` (TMEC Command), `context/standing-approvals.md` (TMEC Command) | See `policies/APPROVALS.md`, "Items, decisions and the send gate" |
 | One-line run logs | `log/runs-<YYYY-MM>.md` | Each routine appends its own line |
 
 Consent evidence is kept for as long as TMEC keeps messaging the person, and the opt-out list is kept for good. How long the rest is kept: **[verify]**.
@@ -157,8 +158,9 @@ An agent does not hand over a draft as ready unless every line is true. The draf
 | 6 | No dollar amounts, no "free", no "pays for itself", no payback, no invented customer or review | Rewrite or hold |
 | 7 | No install-time promise, no "sign by" language | Rewrite |
 | 8 | Consent on file for every person and home shown (posts) | Do not use the clip |
-| 9 | Tommy's yes on this item, or a standing approval for this exact template and situation | Wait; put it in `approved/pending/<bot>/` |
+| 9 | Tommy's yes on this item (a decision file with the hash you recompute from the item's payload now), or a standing approval for this exact template and situation | Wait; put it in `approved/pending/<bot>/` |
 | 10 | `state/EXTERNAL_WRITES_STOPPED` does not exist | Do nothing outward (SKIPPED_STOPPED) |
+| 11 | Not test mode and `context/config.json` `run` is `tommy`; `live_sends` is `true`; the item's sent key isn't already in `state/sent-keys-<bot>.md` | Do nothing outward; write why in the daily note |
 
 ## 9. When an agent stops and asks Tommy
 
@@ -194,6 +196,7 @@ Added 2026-11-04 for the Office (`tmec-aios/agents/13-office-admin.md`, not on G
 |---|---|
 | Re-read the ACMA, ACCC, OAIC direct-marketing and Queensland pages above and clear each **[verify]** | Justin's team, before the first live send |
 | Each lead vendor's terms on contacting leads | Tommy or Justin's team |
+| Whether the 8 Nov "we have consent" statement for 12-month-old purchased leads may be relied on, and what evidence it needs (until then those leads are held) | Justin, with Tommy |
 | Whether TMEC is covered by the Privacy Act (turnover; "trading in personal information") | Tommy's accountant or lawyer |
 | TMEC's legal name, ABN, electrical licence number, postal address line | Tommy, in the intake |
 | Whether a reply-to-unsubscribe is acceptable, or the sending platform must supply the link | ACMA fact sheet |

@@ -1,6 +1,6 @@
 # The email the partner sends to their own customers
 
-Two versions, in the partner's voice. The partner sends it from their own account to their own customers. Tommy approves the protected lines before it is handed over (no bot owns the partner send pack yet: TMEC Command).
+Two versions, in the partner's voice. The partner sends it from their own account to their own customers. Dream 100 owns this step (skill `partner-campaign-run`). Tommy approves the protected lines, as an item for his yes, before the pack goes to the partner.
 
 ## How to use it
 

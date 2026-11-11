@@ -4,7 +4,7 @@ The target is a trade that does not sell solar, has a customer list worth emaili
 
 ## Wave 0: trades Tommy already knows
 
-Before any cold email, Tommy lists the trades he already works alongside or knows by name. They get a call or a text from Tommy himself, then the one-pager. Those relationships already exist, so they come first. The Dream 100 bot drafts each message; Tommy approves it; the bot sends it from his mailbox. Names: OPEN (Tommy supplies them).
+Before any cold email, Tommy lists the trades he already works alongside or knows by name. Tommy doesn't contact them himself (Justin, 11 Nov). The Dream 100 bot drafts a message to each for his yes, and on his yes the bot sends it from his mailbox, then the one-pager. Those relationships already exist, so they come first. Names: OPEN (Tommy supplies them).
 
 ## Ranked
 
@@ -38,7 +38,7 @@ Justin's brief on the 9 Nov call widened the program to "anybody who deals with 
 |---|---|---|---|
 | **Insurance panel builders, their supervisors and project managers** | After a hailstorm: they hand out the rectification work orders | **Wanted by Tommy**: "insurance builders are fine", "those would be great deals… multiple jobs per month" (9 Nov). Three already send work; their names are Tommy's to give | F6.B.3 after-partner, F6.A.4 strategic alliance |
 | Loss assessors and adjusters | After a claim: they decide who reports | Proposed (inferred from the panel-builder flow) | F6.B.1 before-partner |
-| Insurers' building-claim and catastrophe teams | They pick the builder panel | Not published (checked 11 Nov); the way in is the adjusters and Tommy's three builders | F6.A.4 |
+| Insurers' building-claim and catastrophe teams | They pick the builder panel | The 8 Nov call recorded that panel lists are on insurers' websites. The 11 Nov check of RACQ, Suncorp, AAMI, QBE, Allianz, Youi and NRMA found only motor repairer schemes published. So the way in is the adjusters and Tommy's three builders | F6.A.4 |
 | Solar panel, battery and inverter makers and distributors with installer programs | Before: they pick who installs | Proposed by Justin ("the solar company who sells the panels, they're good partners") | F8.C.1 tech partner, F8.A.1 dealer |
 | Origin Energy and other energy retailers | Alongside: same bill, same customer | Proposed by Justin ("what can we do to be your main solar guy?"). Tommy is cool on Origin since it owns SolarQuotes: his call | F9 strategic alliance |
 | Gas suppliers and gas fitters | Alongside: households switching off gas to electric | Proposed by Justin ("gas pipes, gas lines") | F6.B.2 during-partner |

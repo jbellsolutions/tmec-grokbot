@@ -11,14 +11,15 @@ description: The intake interview. Use once at setup (the intake step in START-H
 - `/workspace/tmec-team/repo/OPEN_QUESTIONS.md`: the questions that are waiting.
 
 ## Steps
-1. If `context/owner.md` exists, read it back in one message: "Here's what I know. Is anything wrong?" Fix only what Tommy corrects.
-2. Ask each line still marked `ASK`, then the OPEN_QUESTIONS rows that this milestone needs:
+1. If `context/owner.md` doesn't exist (nothing was attached), create it from `/workspace/tmec-team/repo/client-context/CLIENT-CONTEXT.template.md`, every unknown left as `ASK`.
+2. If `context/owner.md` exists, read it back in one message: "Here's what I know. Is anything wrong?" Fix only what Tommy corrects.
+3. Ask each line still marked `ASK`, then the OPEN_QUESTIONS rows that this milestone needs:
    - one question per message;
    - short enough to answer on a phone;
    - offer choices when there are only a few.
-3. Write each answer in place of its `ASK`, with today's date. Write the team's settings to `context/config.json`. A required field nobody knows yet stays `REQUIRED`; never guess it.
-4. When the apps are connected later, fill in any IDs you can now look up yourself (Slack member IDs, sheet column names), then confirm them with Tommy.
-5. Done: no `ASK` is left that the current milestone needs. Tommy has said "right" to the readback.
+4. Write each answer in place of its `ASK`, with today's date. Write the team's settings to `context/config.json` (keep `run`, `live_sends` and the other keys Step 1 wrote; add `schedule`, `vendor_messages`, `partner_fee`, `partner_fee_trigger`, `attribution_window`, `partner_inbox`, `referral_offer`, `hubspot_bcc_address` as Tommy answers them). A required field nobody knows yet stays `REQUIRED`; never guess it.
+5. When the apps are connected later, fill in any IDs you can now look up yourself (Slack member IDs, sheet column names), then confirm them with Tommy.
+6. Done: no `ASK` is left that the current milestone needs. Tommy has said "right" to the readback.
 
 ## Never
 - Ask for a password, key or token in chat.

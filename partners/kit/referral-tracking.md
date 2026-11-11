@@ -4,7 +4,7 @@ One rule: every enquiry that comes from a partner's email carries the partner's 
 
 ## The partner id
 
-`p001`, `p002` and so on, given by TMEC Command (no partner bot owns this step yet) when a trade first shows interest, never reused. The id contains no personal data, so it is safe in a web address.
+`p001`, `p002` and so on, given by Dream 100 (`partner-campaign-run`) when a partner says yes, from any list, never reused. The id contains no personal data, so it is safe in a web address.
 
 ## The tagged link
 
@@ -18,7 +18,7 @@ Example shape: `https://<tmec-site>/<solar-enquiry-page>?src=p012`
 - A repeat send by the same partner adds a campaign number: `?src=p012&c=2`.
 - Optional tracking tags a web analytics tool understands can ride along: `&utm_source=partner&utm_medium=email&utm_campaign=p012`. Use them only if TMEC's site analytics reads them.
 - Never put a customer's name, email or phone in a link.
-- TMEC Command checks the link opens before it is handed over.
+- Dream 100 checks the link opens before it is handed over.
 
 ## The phone code
 
@@ -30,17 +30,17 @@ For customers who ring instead of clicking. A short word and the partner number,
 |---|---|---|---|
 | **form** | The customer opens the tagged link and fills in TMEC's form. The `src` value should be saved on the HubSpot contact in a property (suggested name: `partner_src`) | Alfred creates the property and the form mapping, on Tommy's yes | UNKNOWN until proved at install |
 | **phone** | The customer rings TMEC and quotes the code | The sales team, in a HubSpot note or the same property; Alfred makes sure it is recorded | Works with no website change |
-| **forward** | The customer replies "yes" to the partner, who forwards it to the TMEC partner inbox | TMEC Command reads the inbox and hands it off | Works with no website change |
-| **named** | The customer says a partner sent them, with no link or code | The sales team records the partner's name; TMEC Command matches it | Works, but Tommy decides each case until a rule is set |
+| **forward** | The customer replies "yes" to the partner, who forwards it to the TMEC partner inbox | Dream 100 reads the partner inbox and writes the hand-off line | Works with no website change (whether Connect apps can read the inbox is UNKNOWN) |
+| **named** | The customer says a partner sent them, with no link or code | The sales team records the partner's name; Dream 100 matches it | Works, but Tommy decides each case until a rule is set |
 
-Every captured enquiry becomes one "for CRM & Reactivation" line in the partner bot's daily note (TMEC Command passes it on), then a tagged record in HubSpot written by Alfred on Tommy's yes.
+Every captured enquiry becomes one line in `data/partners/handoff/<YYYY-MM-DD>.jsonl` (Dream 100 writes it; the format is in `partner-campaign-run`). CRM & Reactivation reads that folder and lists the enquiries for Alfred, who writes the tagged record in HubSpot on Tommy's yes.
 
 ## Proving the form route (once, at install)
 
 1. Open the tagged link with the id `ptest`: `<TMEC page address>?src=ptest`.
 2. Submit a test enquiry with the name "TEST Partner" and a number or address that belongs to the team.
 3. CRM & Reactivation reads HubSpot and confirms that contact shows `ptest` in the partner property.
-4. Record the result on CRM & Reactivation's and TMEC Command's run logs: **works**, or **does not carry the tag** (then phone, forward and named routes are the only ones, and the website fix goes on Tommy's list).
+4. Record the result on CRM & Reactivation's and Dream 100's run logs: **works**, or **does not carry the tag** (then phone, forward and named routes are the only ones, and the website fix goes on Tommy's list).
 5. The TEST contact is left marked TEST. Deleting it is Tommy's yes.
 
 ## What can and cannot be seen
@@ -71,7 +71,8 @@ Every captured enquiry becomes one "for CRM & Reactivation" line in the partner 
 
 | What | Where | Writer |
 |---|---|---|
-| Partner id, phone code, link | Set by TMEC Command (no partner bot owns it yet) | TMEC Command |
-| Tagged enquiries awaiting CRM & Reactivation | A "for CRM & Reactivation" line in the writing bot's `daily/<date>/<bot>.md` | The bot that took the enquiry; TMEC Command passes it on |
+| Partner id, phone code, link | The partner card, `data/partners/active/<partner-id>.md` | Dream 100 |
+| Tagged enquiries awaiting CRM & Reactivation | `data/partners/handoff/<YYYY-MM-DD>.jsonl` | Dream 100 |
 | The tag on the HubSpot contact and deal | HubSpot | Alfred |
-| Sales and fees | Home and writer set by TMEC Command; every payout waits for Tommy's yes | TMEC Command |
+| Tagged won deals | `data/crm/partner-sales.md` | CRM & Reactivation (Dream 100 reads it) |
+| Fees owed | The payout ledger `data/partners/payouts.csv` (columns in `payout-ledger.csv`); every payout waits for Tommy's yes, and no bot pays | Dream 100 |

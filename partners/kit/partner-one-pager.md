@@ -39,7 +39,7 @@ Quote. Sell. Install. Chase anyone. Handle questions about prices, rebates or ti
 
 ## Who TMEC Services is
 
-A Sunshine Coast business installing solar, batteries and EV chargers, and doing electrical and air-con work. The installers are TMEC's own team, not subcontractors.
+A Sunshine Coast business installing solar, batteries and EV chargers, and doing electrical work. The installers are TMEC's own team, not subcontractors.
 
 ## About air-con (for air-con trades) **[Tommy to confirm before this is shown]**
 

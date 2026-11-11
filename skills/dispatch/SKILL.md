@@ -29,6 +29,8 @@ description: Turns what Tommy asks for into a job for the one bot that owns it, 
 5. **Follow up.** In each brief, a job not in that bot's `state/done-<bot>.md` by its BY time is listed as late, with the bot's last run-log line.
 6. **Capacity full.** When Ops' board says the next free slot is past the line in `context/config.json`, write a job to Lead Radar, Dream 500 and Trades Outreach to hold new outreach, and tell Tommy. Lift it the same way when Ops says there's room.
 
+7. **Stop.** When Tommy or Justin's team says "stop everything", or another bot tells you it created the stop file: make sure `/workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED` exists with the reason, write "pause all campaigns" jobs to `requests/to-dream-500/` and `requests/to-trades-outreach/` and nudge both, nudge CRM & Reactivation and Content Studio to unschedule any scheduled HubSpot email, and tell Tommy once what's paused and what isn't. Only you write those jobs. Remove the stop file only on Tommy's words.
+
 ## Done means
 Every request from Tommy is a job with one owner, and every job ends in that bot's done file or in the brief as late.
 

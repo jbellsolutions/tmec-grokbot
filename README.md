@@ -20,7 +20,6 @@ Create a new Grok Bot in the Grok app (desktop), attach tmec-grokbot.zip (made b
 | `agents/` | One charter per bot |
 | `routines/` | Every scheduled job. All are created paused |
 | `skills/` | How each job is done |
-| `projects/` | Bigger builds for later |
 | [`policies/APPROVALS.md`](policies/APPROVALS.md) | What each bot may do alone, and what it must ask about |
 | [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md) | What only Tommy can answer |
 | [`docs/BUILD-RECORD.md`](docs/BUILD-RECORD.md) | What's specified, built and actually running |

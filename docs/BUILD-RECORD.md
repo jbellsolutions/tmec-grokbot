@@ -62,7 +62,16 @@ This record keeps what's specified, what's built and what's actually running sep
 
 | Finding | What was done |
 |---|---|
-| Pending: the independent review runs before the first commit | |
+| An independent Opus review ran on the first commit (b8f6a59): 8 blockers, 17 should-fix | Fixed in the second commit, below |
+| B1 The zip from `cb zip` has a top folder, so `repo/` paths broke | Step 1 moves the contents up and checks `repo/START-HERE.md` |
+| B2 Step 7 named Grok routines, not the Orgo ones; real overlaps (Partner replies, nurture-daily) unlisted | Table rebuilt from `tmec-aios/routines/` exact names, with what keeps running and why |
+| B3 A yes could be recorded on text Tommy never saw, or mapped from the wrong list | `approval-queue` shows the payload before a yes and records SHOWN; every numbered list writes its own map; decided items stop being listed |
+| B4 The hash didn't cover recipients, lists or send time; decisions shared one folder | One item format with a PAYLOAD block (TO, list hash, SEND, text); hash recomputed at action time; `approved/decisions/<bot>/` |
+| B5 The stop switch missed decision paths, scheduled sends and live campaigns; any bot wrote pause jobs | The send gate in APPROVALS on every outward step; scheduled HubSpot emails unscheduled on stop; replies routines and the morning brief run a stop-only path; only TMEC Command writes pause jobs |
+| B6 Four skills pointed at a policy path without `repo/` | Fixed |
+| B7 Dream 100 messages lacked the Spam Act sender details, licence line and consent basis; BCC to HubSpot could create contacts | Added; BCC only when Justin sets `hubspot_bcc_ok` |
+| B8 Partner campaign steps had two owners (kit vs charter) | Dream 100 owns them throughout; one hand-off format |
+| Should-fix: isolation wording blocked needed reads; HubSpot route for Ops/Forecast/Vendor Scout; sends possible at M3; decided items reprocessed; quiet-quote approvals unhandled; Dream 100 list never filled; yes-partners from Dream 500/Trades; partner sales not reaching Dream 100; handle-only radar buyers; extra writers on opt-out files; partner consent check without Tommy's yes; relayed yes; "Tommy sends by hand" fallbacks; intake keys; milestones; treg spend in tests; fee sourcing; insurer panels; consent override; [verify] gate | Each fixed or put to Justin in OPEN_QUESTIONS J10 to J14 |
 
 ## Open items and who owns them
 

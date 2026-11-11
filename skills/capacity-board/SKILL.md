@@ -10,7 +10,7 @@ TMEC has two in-house install teams and no subcontractors, so every date promise
 ## Inputs
 - The install schedule, read **today** (Brisbane date), from the source named under `schedule` in `/workspace/tmec-team/context/config.json`: `sheet` (a Google Sheet, one row per job: date, team, job type, suburb, days), `calendar` (one Google Calendar per team, one event per job), or `jobsoftware` (the job-management software, if it can be read). Access is read only, through Connect apps or a shared sheet. If `schedule` is missing, the source is unknown: the board says UNKNOWN.
 - `/workspace/tmec-team/data/ops/capacity.md`: the board and the **Rules** at its top. Tommy confirms every rule; until he does it is UNKNOWN. Rules: usual days per job type per team; leave and public holidays; the normal and maximum wait Tommy is comfortable promising; any approval or parts lead time he wants added.
-- HubSpot, read only through Connect apps: jobs sold but not yet scheduled (the backlog). Counts and job references only.
+- HubSpot, read only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only HubSpot route this bot has; not Connect apps): jobs sold but not yet scheduled (the backlog). Counts and job references only.
 - This week's scoreboard in `/workspace/tmec-team/data/forecast/` (leads and quotes this week against last, for incoming load).
 
 ## Steps: the board (every run)
@@ -20,7 +20,7 @@ TMEC has two in-house install teams and no subcontractors, so every date promise
    - Measures: the earliest slot for a standard job; the share of working days booked in the next 4 weeks (starting value); the backlog count.
    - AMBER when the earliest slot passes Tommy's normal wait; RED when it passes his maximum. If Tommy hasn't given both, the status is `UNKNOWN: thresholds not set` and the raw numbers show. Never GREEN by default.
 4. **On AMBER or RED**, add **Throttle options** under the status for TMEC Command. Use only outreach that brings in leads: Dream 100 sends, Dream 500 waves, Trades Outreach waves, reactivation batches, newsletter sends, radar replies. Never the lead vendors (Tommy keeps them as the baseline). For each option say what it would slow and what it wouldn't. Ops recommends; TMEC Command offers it to Tommy; nothing is slowed without his yes.
-5. **File one item** in `/workspace/tmec-team/approved/pending/ops/<date>-capacity.md` when the status changes to AMBER or RED, not on every run (format below). On a Monday add `NOT_BEFORE: Tuesday 07:00`.
+5. **File one item** in `/workspace/tmec-team/approved/pending/ops/ops-<YYYY-MM-DD>.md` (the `ITEM:` id is the file name without `.md`) when the status changes to AMBER or RED, not on every run (format below). On a Monday put `SEND: show Tommy on Tuesday 07:00` in the payload.
 6. **Add incoming-load facts** (not a forecast): sold-not-scheduled count, quotes out in the last 30 days, leads this week against last week.
 7. If the schedule is UNKNOWN two runs in a row, put it in the daily note for TMEC Command.
 
@@ -35,18 +35,28 @@ TMEC has two in-house install teams and no subcontractors, so every date promise
 ## Steps: checking a planned surge
 When TMEC Command gives a job in `/workspace/tmec-team/requests/to-ops/` (a wave size and date, before Tommy agrees to it): report the position as facts (status, earliest slot per team, backlog, weeks around the date that are already full). Add a line about expected sales only if the scoreboard shows a measured close rate for that source (30 leads or more); otherwise write `UNKNOWN: no measured close rate for <source> yet`. Recommend go, stagger or hold. Ops doesn't approve or schedule the surge.
 
+## Test mode
+If the routine is listed `test` in `context/routines-on.md`, or `context/config.json` `run` is `test`: the board is written to `/workspace/tmec-team/state/test/ops/capacity.md` instead of `data/ops/capacity.md` (other bots read the live board, so a test board must not replace it), item ids start `test-`, and the live sent keys are not touched. Reading the schedule is free, so it still happens. This bot makes no paid call and sends nothing.
+
 ## Output
 - The answer, in the chat or in the daily note.
 - `/workspace/tmec-team/data/ops/capacity.md`, rebuilt each weekday.
-- A pending item on a change of status:
+- A pending item on a change of status, in the shared item format (`/workspace/tmec-team/repo/policies/APPROVALS.md`, "Items, decisions and the send gate"):
   ```
-  ITEM: ops-<date>
+  ITEM: ops-<YYYY-MM-DD>
   BOT: ops
   WHY: status changed to <AMBER|RED> · <the numbers, with source and read time>
+  ---PAYLOAD---
+  TO: TMEC Command, for Tommy to decide (nothing goes out from this bot)
+  SEND: <show Tommy now | Tuesday 07:00 if filed on a Monday>
+  SUBJECT: none
   TEXT:
   <the throttle options, one per line, and the question "slow any of these?">
-  HASH: <sha256 of TEXT>
+  ---END---
+  HASH: <sha256 of every byte between the ---PAYLOAD--- line and the ---END--- line, newlines included>
   ```
+  The one-off question about where the schedule lives is an item `ops-<YYYY-MM-DD>-schedule` in the same format.
+- **Decisions.** For each file in `/workspace/tmec-team/approved/decisions/ops/` whose id isn't in `/workspace/tmec-team/state/sent-keys-ops.md`: recompute the sha256 of the pending item's payload now and compare it with the decision's HASH (a mismatch means the item changed after Tommy saw it: ignore it and tell TMEC Command). `yes`: note it and tell TMEC Command to carry it out (this bot slows nothing itself, so no send gate applies to it); `no`: note it declined; `change`: refile once as a new item. Add the id and the outcome to the sent keys so it is never read twice.
 
 ## Done means
 Every date in an answer came from a read made today and names its source; the board has no personal details; the status is never GREEN without Tommy's thresholds.
