@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "build_standard": "client-build/1",
+  "name": "TMEC's AI team on Grok Bot",
+  "description": "TMEC Command, the one bot Tommy talks to, runs ten bots on one Grok account: Lead Radar, Dream 100, Dream 500, Trades Outreach, CRM & Reactivation, Content Studio, SEO, Ops, Forecast and Vendor Scout. Everything is drafted for Tommy's yes; paid ads stay with Claude Code.",
+  "platform": "xAI Grok Bot (x.ai/bot)",
+  "entry_point": "START-HERE.md",
+  "owner": "Tommy",
+  "timezone": "Australia/Brisbane",
+  "repo_url": "https://github.com/jbellsolutions/tmec-grokbot",
+  "accounts": {
+    "business": {
+      "lead_bot": "TMEC Command",
+      "workspace": "/workspace/tmec-team"
+    }
+  },
+  "agents": [
+    {
+      "name": "TMEC Command",
+      "charter": "agents/01-tmec-command.md",
+      "account": "business",
+      "milestone": "M0",
+      "routines": [
+        "routines/tmec-command-evening-brief.prompt",
+        "routines/tmec-command-morning-brief.prompt"
+      ],
+      "skills": [
+        "approval-queue",
+        "ask-ledger",
+        "dispatch",
+        "evening-brief",
+        "getting-started",
+        "morning-brief"
+      ]
+    },
+    {
+      "name": "Lead Radar",
+      "charter": "agents/02-lead-radar.md",
+      "account": "business",
+      "milestone": "M1",
+      "routines": [
+        "routines/lead-radar-sweep.prompt"
+      ],
+      "skills": [
+        "radar-reply-draft",
+        "radar-sweep"
+      ]
+    },
+    {
+      "name": "Dream 100",
+      "charter": "agents/03-dream-100.md",
+      "account": "business",
+      "milestone": "M1",
+      "routines": [
+        "routines/dream-100-drafts.prompt",
+        "routines/dream-100-replies.prompt"
+      ],
+      "skills": [
+        "dream-100-draft",
+        "dream-100-send",
+        "partner-campaign-run",
+        "partner-replies",
+        "partner-score"
+      ]
+    },
+    {
+      "name": "Dream 500",
+      "charter": "agents/04-dream-500.md",
+      "account": "business",
+      "milestone": "M2",
+      "routines": [
+        "routines/dream-500-replies.prompt",
+        "routines/dream-500-wave-prep.prompt"
+      ],
+      "skills": [
+        "cold-email-wave",
+        "partner-replies",
+        "partner-score",
+        "segment-list-build"
+      ]
+    },
+    {
+      "name": "Trades Outreach",
+      "charter": "agents/05-trades-outreach.md",
+      "account": "business",
+      "milestone": "M2",
+      "routines": [
+        "routines/trades-replies.prompt",
+        "routines/trades-wave-prep.prompt"
+      ],
+      "skills": [
+        "cold-email-wave",
+        "partner-replies",
+        "partner-score",
+        "trades-list-build"
+      ]
+    },
+    {
+      "name": "CRM & Reactivation",
+      "charter": "agents/06-crm-reactivation.md",
+      "account": "business",
+      "milestone": "M1",
+      "routines": [
+        "routines/crm-sweep.prompt",
+        "routines/reactivation-batch.prompt"
+      ],
+      "skills": [
+        "crm-sweep",
+        "quiet-quote-followup",
+        "reactivation-batch"
+      ]
+    },
+    {
+      "name": "Content Studio",
+      "charter": "agents/07-content-studio.md",
+      "account": "business",
+      "milestone": "M2",
+      "routines": [
+        "routines/content-week.prompt",
+        "routines/newsletter.prompt"
+      ],
+      "skills": [
+        "content-week",
+        "newsletter-issue"
+      ]
+    },
+    {
+      "name": "SEO",
+      "charter": "agents/08-seo.md",
+      "account": "business",
+      "milestone": "M2",
+      "routines": [
+        "routines/seo-weekly.prompt"
+      ],
+      "skills": [
+        "gbp-drafts",
+        "review-replies",
+        "seo-audit"
+      ]
+    },
+    {
+      "name": "Ops",
+      "charter": "agents/09-ops.md",
+      "account": "business",
+      "milestone": "M1",
+      "routines": [
+        "routines/capacity-board.prompt"
+      ],
+      "skills": [
+        "capacity-board"
+      ]
+    },
+    {
+      "name": "Forecast",
+      "charter": "agents/10-forecast.md",
+      "account": "business",
+      "milestone": "M1",
+      "routines": [
+        "routines/monday-scoreboard.prompt",
+        "routines/rebate-watch.prompt"
+      ],
+      "skills": [
+        "rebate-watch",
+        "scoreboard"
+      ]
+    },
+    {
+      "name": "Vendor Scout",
+      "charter": "agents/11-vendor-scout.md",
+      "account": "business",
+      "milestone": "M2",
+      "routines": [
+        "routines/vendor-review.prompt"
+      ],
+      "skills": [
+        "vendor-review"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "name": "approval-queue",
+      "path": "skills/approval-queue"
+    },
+    {
+      "name": "ask-ledger",
+      "path": "skills/ask-ledger"
+    },
+    {
+      "name": "capacity-board",
+      "path": "skills/capacity-board"
+    },
+    {
+      "name": "cold-email-wave",
+      "path": "skills/cold-email-wave"
+    },
+    {
+      "name": "content-week",
+      "path": "skills/content-week"
+    },
+    {
+      "name": "crm-sweep",
+      "path": "skills/crm-sweep"
+    },
+    {
+      "name": "dispatch",
+      "path": "skills/dispatch"
+    },
+    {
+      "name": "dream-100-draft",
+      "path": "skills/dream-100-draft"
+    },
+    {
+      "name": "dream-100-send",
+      "path": "skills/dream-100-send"
+    },
+    {
+      "name": "evening-brief",
+      "path": "skills/evening-brief"
+    },
+    {
+      "name": "gbp-drafts",
+      "path": "skills/gbp-drafts"
+    },
+    {
+      "name": "getting-started",
+      "path": "skills/getting-started"
+    },
+    {
+      "name": "morning-brief",
+      "path": "skills/morning-brief"
+    },
+    {
+      "name": "newsletter-issue",
+      "path": "skills/newsletter-issue"
+    },
+    {
+      "name": "partner-campaign-run",
+      "path": "skills/partner-campaign-run"
+    },
+    {
+      "name": "partner-replies",
+      "path": "skills/partner-replies"
+    },
+    {
+      "name": "partner-score",
+      "path": "skills/partner-score"
+    },
+    {
+      "name": "quiet-quote-followup",
+      "path": "skills/quiet-quote-followup"
+    },
+    {
+      "name": "radar-reply-draft",
+      "path": "skills/radar-reply-draft"
+    },
+    {
+      "name": "radar-sweep",
+      "path": "skills/radar-sweep"
+    },
+    {
+      "name": "reactivation-batch",
+      "path": "skills/reactivation-batch"
+    },
+    {
+      "name": "rebate-watch",
+      "path": "skills/rebate-watch"
+    },
+    {
+      "name": "review-replies",
+      "path": "skills/review-replies"
+    },
+    {
+      "name": "scoreboard",
+      "path": "skills/scoreboard"
+    },
+    {
+      "name": "segment-list-build",
+      "path": "skills/segment-list-build"
+    },
+    {
+      "name": "seo-audit",
+      "path": "skills/seo-audit"
+    },
+    {
+      "name": "trades-list-build",
+      "path": "skills/trades-list-build"
+    },
+    {
+      "name": "vendor-review",
+      "path": "skills/vendor-review"
+    }
+  ],
+  "projects": [],
+  "reserved_agents": [
+    {
+      "name": "Meta Ads",
+      "charter": "agents/90-meta-ads.md",
+      "milestone": "not scheduled"
+    },
+    {
+      "name": "Google Ads",
+      "charter": "agents/91-google-ads.md",
+      "milestone": "not scheduled"
+    },
+    {
+      "name": "Commercial",
+      "charter": "agents/92-commercial-solar.md",
+      "milestone": "M4"
+    },
+    {
+      "name": "Hail and insurance",
+      "charter": "agents/93-hail-insurance.md",
+      "milestone": "M4"
+    }
+  ]
+}

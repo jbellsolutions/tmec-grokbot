@@ -1,0 +1,33 @@
+# Private client details never go in this repo.
+CLIENT-CONTEXT.md
+client-context/*.md
+!client-context/README.md
+!client-context/CLIENT-CONTEXT.template.md
+private/
+# The Dream Map quotes the client. It goes to them directly, never through the repo.
+DREAM-MAP.md
+PERSONAL-CONTEXT.md
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+*.secret
+secrets/
+secrets.*
+
+# Call recordings and transcripts
+*.mp4
+*.mov
+*.m4a
+*.mp3
+*.wav
+transcripts/
+
+# OS and editor noise
+.DS_Store
+node_modules/
+__pycache__/

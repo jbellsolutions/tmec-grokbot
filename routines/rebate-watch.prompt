@@ -1,0 +1,18 @@
+NAME: Rebate watch
+OWNER: Forecast
+ACCOUNT: business
+WHEN: The 1st of each month at 7:11 AM (Australia/Brisbane)
+MILESTONE: M1
+STATUS: Created paused. Turned on only after Tommy says yes.
+---
+Switch check: read /workspace/tmec-team/context/routines-on.md. If "Rebate watch" isn't listed there as "on" or "test", append "<time> · Rebate watch · SKIPPED_OFF" to /workspace/tmec-team/log/runs-<YYYY-MM>.md and stop.
+Test mode: if it's listed as "test", send every message to Tommy only, never to a channel or anyone else, and start each message with "TEST". Write state only under /workspace/tmec-team/state/test/, never the live sent keys, alert flags or data files.
+Stop check: if /workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED exists, append "<time> · Rebate watch · SKIPPED_STOPPED" to the run log and stop, sending nothing. Whoever stopped the team already told Tommy.
+Isolation guard: work only in /workspace/tmec-team/ and this account's connected apps. If /workspace/tmec-team/context/owner.md is missing, append "<time> · Rebate watch · NO_CLIENT_SOURCE" to the run log and stop. Never use another bot's files, logins or memory.
+Lean run: read only what this job needs. Stop with NO_CHANGE only where the job below says nothing changed: append "<time> · Rebate watch · NO_CHANGE" to the run log and stop. A report that always goes out never stops here.
+Run log: when you finish, append "<time> · Rebate watch · EXECUTED · <one-line result>" to /workspace/tmec-team/log/runs-<YYYY-MM>.md, or FAILED with the reason. A source you couldn't read is UNKNOWN in your output, never zero.
+
+First, read your decisions: for each file in /workspace/tmec-team/approved/decisions/ for one of your items (BOT: forecast) that isn't in /workspace/tmec-team/state/sent-keys-forecast.md yet, record it and add its id to the sent keys.
+Then read any new job in /workspace/tmec-team/requests/to-forecast/ about rebates and do it first.
+Then use the rebate-watch skill: re-read the Clean Energy Regulator's pages, update /workspace/tmec-team/data/forecast/rebates.md (every fact with its URL and today's date), and say what changed since last month. This report always goes out (the check date moves even when nothing else does), so never write NO_CHANGE.
+Write /workspace/tmec-team/daily/<today>/forecast.md: what changed, days to the next step if inside 120, and any difference from what Tommy said. A change Content Studio's newsletter must reflect goes to TMEC Command in the daily note. Send nothing to anyone but Tommy.

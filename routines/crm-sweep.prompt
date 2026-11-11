@@ -1,0 +1,21 @@
+NAME: CRM sweep
+OWNER: CRM & Reactivation
+ACCOUNT: business
+WHEN: Every weekday at 5:31 AM (Australia/Brisbane)
+MILESTONE: M3
+STATUS: Created paused. Turned on only after Tommy says yes.
+---
+Switch check: read /workspace/tmec-team/context/routines-on.md. If "CRM sweep" isn't listed there as "on" or "test", append "<time> · CRM sweep · SKIPPED_OFF" to /workspace/tmec-team/log/runs-<YYYY-MM>.md and stop.
+Test mode: if it's listed as "test", send every message to Tommy only, never to a channel or anyone else, and start each message with "TEST". Write state only under /workspace/tmec-team/state/test/, never the live sent keys, alert flags or data files.
+Stop check: if /workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED exists, append "<time> · CRM sweep · SKIPPED_STOPPED" to the run log and stop, sending nothing. Whoever stopped the team already told Tommy.
+Isolation guard: work only in /workspace/tmec-team/ and this account's connected apps. If /workspace/tmec-team/context/owner.md is missing, append "<time> · CRM sweep · NO_CLIENT_SOURCE" to the run log and stop. Never use another bot's files, logins or memory.
+Lean run: read only what this job needs. Stop with NO_CHANGE only where the job below says nothing changed: append "<time> · CRM sweep · NO_CHANGE" to the run log and stop. A report that always goes out never stops here.
+Run log: when you finish, append "<time> · CRM sweep · EXECUTED · <one-line result>" to /workspace/tmec-team/log/runs-<YYYY-MM>.md, or FAILED with the reason. A source you couldn't read is UNKNOWN in your output, never zero.
+
+First, read your decisions: for each file in /workspace/tmec-team/approved/decisions/ for one of your items (BOT: crm-reactivation) that isn't in /workspace/tmec-team/state/sent-keys-crm-reactivation.md yet, act on it. A yes on a reactivation batch is acted on by the reactivation-batch skill (the batch routine does that on Wednesdays, and a decision wakes it too); a yes on an add-to-HubSpot list is only marked "approved, Tommy to pass to Alfred" (you never write HubSpot contacts or deals); a no marks it declined; a change is redrafted as a new item. In test mode, write what you would have done to /workspace/tmec-team/state/test/ and do nothing else.
+Then read any new job in /workspace/tmec-team/requests/to-crm-reactivation/ and do it first.
+Then use the crm-sweep skill: read HubSpot (read-only), find the follow-ups due, quotes nobody chased, replies waiting and deals gone quiet, copy new unsubscribes into /workspace/tmec-team/data/crm/suppression.csv, and list any new radar buyers that aren't in HubSpot yet as one "add to HubSpot" item for Tommy to pass to Alfred.
+Then use the quiet-quote-followup skill: for quotes that went quiet and are due a step in the six-email sequence, draft the emails (to a limit of 25) and put them in /workspace/tmec-team/approved/pending/crm-reactivation/ as one batch. Draft only: nothing is sent or scheduled.
+If HubSpot can't be read, write "UNKNOWN: HubSpot" in the daily note, never "all clear". If nothing changed since the last run (no new item, no new radar file, no decision, no new quiet quote), write NO_CHANGE and stop.
+Mondays are Tommy's meeting day: anything for him from this run is marked "show Tuesday".
+Write /workspace/tmec-team/daily/<today>/crm-reactivation.md: counts and HubSpot record ids only (never an email address or phone number), what needs Tommy, anything blocked and why, and "Source: HubSpot, read <time>".

@@ -1,0 +1,18 @@
+NAME: Dream 100 drafts
+OWNER: Dream 100
+ACCOUNT: business
+WHEN: Every weekday at 7:23 AM (Australia/Brisbane)
+MILESTONE: M3
+STATUS: Created paused. Turned on only after Tommy says yes.
+---
+Switch check: read /workspace/tmec-team/context/routines-on.md. If "Dream 100 drafts" isn't listed there as "on" or "test", append "<time> · Dream 100 drafts · SKIPPED_OFF" to /workspace/tmec-team/log/runs-<YYYY-MM>.md and stop.
+Test mode: if it's listed as "test", send every message to Tommy only, never to a channel or anyone else, and start each message with "TEST". Write state only under /workspace/tmec-team/state/test/, never the live sent keys, alert flags or data files.
+Stop check: if /workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED exists, append "<time> · Dream 100 drafts · SKIPPED_STOPPED" to the run log and stop, sending nothing. Whoever stopped the team already told Tommy.
+Isolation guard: work only in /workspace/tmec-team/ and this account's connected apps. If /workspace/tmec-team/context/owner.md is missing, append "<time> · Dream 100 drafts · NO_CLIENT_SOURCE" to the run log and stop. Never use another bot's files, logins or memory.
+Lean run: read only what this job needs. Stop with NO_CHANGE only where the job below says nothing changed: append "<time> · Dream 100 drafts · NO_CHANGE" to the run log and stop. A report that always goes out never stops here.
+Run log: when you finish, append "<time> · Dream 100 drafts · EXECUTED · <one-line result>" to /workspace/tmec-team/log/runs-<YYYY-MM>.md, or FAILED with the reason. A source you couldn't read is UNKNOWN in your output, never zero.
+
+First, read your decisions: for each file in /workspace/tmec-team/approved/decisions/ for one of your items (BOT: dream-100) that isn't in /workspace/tmec-team/state/sent-keys-dream-100.md yet, act on it with the dream-100-send skill (yes: send once; no: mark it declined; change: redraft as a new item). In test mode, never send: write what you would have sent to /workspace/tmec-team/state/test/.
+Then read any new job in /workspace/tmec-team/requests/to-dream-100/ and do it first.
+Then use the dream-100-draft skill: take the next 5 businesses on /workspace/tmec-team/data/partners/dream100.csv with status "scored" (highest score first; Tommy's own names before anyone else), research each from public sources, write its message, and put each in /workspace/tmec-team/approved/pending/dream-100/. If no business is waiting and no decision or job came in, write NO_CHANGE and stop.
+Write /workspace/tmec-team/daily/<today>/dream-100.md: decisions acted on, sends (with the sent-folder check), new drafts waiting, anything blocked and why. Send nothing to anyone but Tommy's approved recipients.

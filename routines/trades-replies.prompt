@@ -1,0 +1,20 @@
+NAME: Trades replies
+OWNER: Trades Outreach
+ACCOUNT: business
+WHEN: Every weekday at 1:49 PM (Australia/Brisbane)
+MILESTONE: M5
+STATUS: Created paused. Turned on only after Tommy says yes.
+---
+Switch check: read /workspace/tmec-team/context/routines-on.md. If "Trades replies" isn't listed there as "on" or "test", append "<time> · Trades replies · SKIPPED_OFF" to /workspace/tmec-team/log/runs-<YYYY-MM>.md and stop.
+Test mode: if it's listed as "test", send every message to Tommy only, never to a channel or anyone else, and start each message with "TEST". Write state only under /workspace/tmec-team/state/test/, never the live sent keys, alert flags or data files.
+Stop check: if /workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED exists, append "<time> · Trades replies · SKIPPED_STOPPED" to the run log and stop, sending nothing. Whoever stopped the team already told Tommy.
+Isolation guard: work only in /workspace/tmec-team/ and this account's connected apps. If /workspace/tmec-team/context/owner.md is missing, append "<time> · Trades replies · NO_CLIENT_SOURCE" to the run log and stop. Never use another bot's files, logins or memory.
+Lean run: read only what this job needs. Stop with NO_CHANGE only where the job below says nothing changed: append "<time> · Trades replies · NO_CHANGE" to the run log and stop. A report that always goes out never stops here.
+Run log: when you finish, append "<time> · Trades replies · EXECUTED · <one-line result>" to /workspace/tmec-team/log/runs-<YYYY-MM>.md, or FAILED with the reason. A source you couldn't read is UNKNOWN in your output, never zero.
+
+First, read your decisions: for each file in /workspace/tmec-team/approved/decisions/ for one of your items (BOT: trades-outreach) that isn't in /workspace/tmec-team/state/sent-keys-trades-outreach.md yet, act on it with the cold-email-wave skill (a wave: Part 2; a reply: Part 3). In test mode, never call the cold email tool to create, launch or send anything: write what you would have done to /workspace/tmec-team/state/test/.
+Then use the partner-replies skill on your own campaigns only, the ones in the cold email tool whose names start with TRD-, read with the read key, for replies since the last run. Also read each campaign's unsubscribes, bounces and spam complaints.
+For each reply: an opt-out goes into /workspace/tmec-team/data/partners/opt-outs.csv in this run (writer: trades-outreach; if the file isn't there yet, create it with the header date,email,business,writer,their_words) and the row's status becomes "opted out"; every person the tool shows as unsubscribed goes in the same way. Anything else gets a reply draft from /workspace/tmec-team/repo/partners/kit/reply-playbook.md in /workspace/tmec-team/approved/pending/trades-outreach/, and a business that wants to talk goes to TMEC Command as a "book a call" item in the same folder. Update the row's status in its list at /workspace/tmec-team/data/partners/trades.csv. Send nothing beyond what a matching decision covers.
+Domain health: if a campaign of yours has a bounce rate over 3% or any spam complaint, follow cold-email-wave Part 4 (pause your own TRD- campaigns, tell TMEC Command). Under 1% replies after 200 sends: say so for Tommy.
+If there is no decision, no reply, no unsubscribe, no bounce and nothing to report, write NO_CHANGE and stop.
+Add a "Replies" section to /workspace/tmec-team/daily/<today>/trades-outreach.md: counts per campaign (sent, replies, unsubscribes, bounces; UNKNOWN where the tool couldn't be read), replies by kind, drafts waiting, book-a-call items.

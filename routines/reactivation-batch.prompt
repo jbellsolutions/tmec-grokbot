@@ -1,0 +1,18 @@
+NAME: Reactivation batch
+OWNER: CRM & Reactivation
+ACCOUNT: business
+WHEN: Every Wednesday at 7:53 AM (Australia/Brisbane)
+MILESTONE: M3
+STATUS: Created paused. Turned on only after Tommy says yes.
+---
+Switch check: read /workspace/tmec-team/context/routines-on.md. If "Reactivation batch" isn't listed there as "on" or "test", append "<time> · Reactivation batch · SKIPPED_OFF" to /workspace/tmec-team/log/runs-<YYYY-MM>.md and stop.
+Test mode: if it's listed as "test", send every message to Tommy only, never to a channel or anyone else, and start each message with "TEST". Write state only under /workspace/tmec-team/state/test/, never the live sent keys, alert flags or data files.
+Stop check: if /workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED exists, append "<time> · Reactivation batch · SKIPPED_STOPPED" to the run log and stop, sending nothing. Whoever stopped the team already told Tommy.
+Isolation guard: work only in /workspace/tmec-team/ and this account's connected apps. If /workspace/tmec-team/context/owner.md is missing, append "<time> · Reactivation batch · NO_CLIENT_SOURCE" to the run log and stop. Never use another bot's files, logins or memory.
+Lean run: read only what this job needs. Stop with NO_CHANGE only where the job below says nothing changed: append "<time> · Reactivation batch · NO_CHANGE" to the run log and stop. A report that always goes out never stops here.
+Run log: when you finish, append "<time> · Reactivation batch · EXECUTED · <one-line result>" to /workspace/tmec-team/log/runs-<YYYY-MM>.md, or FAILED with the reason. A source you couldn't read is UNKNOWN in your output, never zero.
+
+First, read your decisions: for each file in /workspace/tmec-team/approved/decisions/ for one of your reactivation items (BOT: crm-reactivation, id starting react-) that isn't in /workspace/tmec-team/state/sent-keys-crm-reactivation.md yet, act on it with the reactivation-batch skill (yes with a matching HASH: create the HubSpot list and marketing email once, as approved; no: mark it declined; change: redraft as a new item). In test mode, never create or send anything in HubSpot: write what you would have done to /workspace/tmec-team/state/test/.
+Then read any new job in /workspace/tmec-team/requests/to-crm-reactivation/ and do it first.
+Then use the reactivation-batch skill: if no batch is waiting on Tommy and the cadence says one is due, pick the people, verify their emails with treg, draft the email and the text message, and put the batch in /workspace/tmec-team/approved/pending/crm-reactivation/ as one item (the email text, the list count, and how the list was picked). Never send, schedule or create anything in HubSpot in this step. If a batch is already waiting, or none is due, or no one passes the gates, write NO_CHANGE and stop.
+Write /workspace/tmec-team/daily/<today>/crm-reactivation.md: the last batch's results (HubSpot's own numbers, labelled as HubSpot's), opt-outs seen, the new batch waiting (counts and how picked, no addresses), anything blocked and why.

@@ -1,0 +1,18 @@
+NAME: SEO weekly
+OWNER: SEO
+ACCOUNT: business
+WHEN: Every Friday at 7:19 AM (Australia/Brisbane)
+MILESTONE: M3
+STATUS: Created paused. Turned on only after Tommy says yes.
+---
+Switch check: read /workspace/tmec-team/context/routines-on.md. If "SEO weekly" isn't listed there as "on" or "test", append "<time> · SEO weekly · SKIPPED_OFF" to /workspace/tmec-team/log/runs-<YYYY-MM>.md and stop.
+Test mode: if it's listed as "test", send every message to Tommy only, never to a channel or anyone else, and start each message with "TEST". Write state only under /workspace/tmec-team/state/test/, never the live sent keys, alert flags or data files.
+Stop check: if /workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED exists, append "<time> · SEO weekly · SKIPPED_STOPPED" to the run log and stop, sending nothing. Whoever stopped the team already told Tommy.
+Isolation guard: work only in /workspace/tmec-team/ and this account's connected apps. If /workspace/tmec-team/context/owner.md is missing, append "<time> · SEO weekly · NO_CLIENT_SOURCE" to the run log and stop. Never use another bot's files, logins or memory.
+Lean run: read only what this job needs. Stop with NO_CHANGE only where the job below says nothing changed: append "<time> · SEO weekly · NO_CHANGE" to the run log and stop. A report that always goes out never stops here.
+Run log: when you finish, append "<time> · SEO weekly · EXECUTED · <one-line result>" to /workspace/tmec-team/log/runs-<YYYY-MM>.md, or FAILED with the reason. A source you couldn't read is UNKNOWN in your output, never zero.
+
+First, read your decisions: for each file in /workspace/tmec-team/approved/decisions/ for one of your items (BOT: seo) that isn't in /workspace/tmec-team/state/sent-keys-seo.md yet, act on it with the skill that wrote the item (yes: mark it "approved, hand to Tommy to publish" and give him the exact text; no: mark it declined; change: redraft as a new item). You never publish anything yourself. In test mode, write only to /workspace/tmec-team/state/test/.
+Then read any new job in /workspace/tmec-team/requests/to-seo/ and do it first.
+Then use the seo-audit skill to read the website, the Google Business Profile, the local searches, the directory listings and the competitors, and write this week's audit. Then use the review-replies skill for each review that is new since last week. Then use the gbp-drafts skill to draft this week's Google Business Profile posts and any Q&A or category suggestions. Put every item that needs Tommy in /workspace/tmec-team/approved/pending/seo/. If nothing on the profile, the reviews or the website changed since last week and no job or decision came in, write NO_CHANGE and stop.
+Write /workspace/tmec-team/daily/<today>/seo.md: what was read and what was UNKNOWN, what changed since last week, items waiting on Tommy, and anything blocked and why. Never publish, post or reply to anyone.
