@@ -5,6 +5,10 @@ description: Reads TMEC's website, Google Business Profile, directory listings a
 
 # SEO audit
 
+## Usage (read less)
+
+Read TMEC's and competitors' pages with `python3 /workspace/tmec-team/repo/usage/scripts/clean_page.py <url> --max-chars 6000`. Save each page's text under `data/seo/pages/` and next week run `page_diff.py <url> data/seo/watch` first: unchanged pages need no re-read. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - TMEC's website: the home page, each service page, the contact page and the footer, as a visitor sees them. Start from the address in `/workspace/tmec-team/context/owner.md`; if it isn't there, search for it and write what you found as UNKNOWN until Tommy confirms.
 - TMEC's Google Business Profile and Maps listing, as a visitor sees them (Grok web search).

@@ -5,6 +5,10 @@ description: Reads HubSpot every weekday and finds the follow-ups due, quotes no
 
 # CRM sweep
 
+## Usage (read less)
+
+Cut HubSpot replies to the fields you need with `python3 /workspace/tmec-team/repo/usage/scripts/pick.py <reply.json> --path results --fields id,properties.email,properties.lifecyclestage`. Pick due rows from state files with `sheet_q.py` (`select * from t where next_due_on <= '<today>'`). Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - HubSpot, read-only. The one read-only private-app token is `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (scopes: contacts, deals, owners, tasks, engagements and notes, marketing email read). It is the only HubSpot route this bot has. Read contacts, deals, tasks, owners, logged emails and calls, unsubscribe status. Write down the time of the read.
 - `/workspace/tmec-team/data/crm/hubspot-map.md`: pipelines, stage meanings, the property that holds the lead source and the partner tag, and the thresholds below. You write it on the first run.

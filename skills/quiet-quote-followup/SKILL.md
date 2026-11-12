@@ -7,6 +7,10 @@ description: Drafts the six-email follow-up for quotes TMEC sent that went quiet
 
 The six-email sequence from the TMEC page. Plain text, from Tommy, one idea each. Always the same honest edge: TMEC's own crews install, no subcontractors, local.
 
+## Usage (read less)
+
+Pick due contacts with `python3 /workspace/tmec-team/repo/usage/scripts/sheet_q.py data/crm/quote-followup-state.csv "select * from t where next_due_on <= '<today>' and status = 'active'"`, and cut HubSpot replies with `pick.py --fields`. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - HubSpot, read-only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only token for reading; creating marketing emails and lists needs the separate `HUBSPOT_WRITE_TOKEN` at M4): deals at a quoted stage with no win, and closed-lost deals, with their contact, quote date, system type, lost reason and notes.
 - `/workspace/tmec-team/data/crm/quote-followup-state.csv` (yours): `hubspot_contact_id, enrolled_on, segment, last_step_sent, last_sent_on, next_due_on, status`. `status`: active, paused_reply, completed, stopped_optout, held.

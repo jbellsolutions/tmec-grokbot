@@ -5,6 +5,10 @@ description: Logs new job footage, asks Tommy for consent on what it wants to us
 
 # Content week
 
+## Usage (read less)
+
+Never open a video to judge it. Work from `shoot-sheet.txt` and the file names. When you must see something, look at one small still from the clip, not the whole clip or a full-screen image. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - `/workspace/tmec-team/media/inbox/<folder>/` (footage and photos, each with `shoot-sheet.txt`: job type, suburb, date, who is shown). No sheet: log the clips with job type and suburb UNKNOWN and consent "not asked", and use none.
 - `/workspace/tmec-team/data/content/consent-log.md` (yours): one line per shoot: `shoot-id | what Tommy cleared | decision id | date`.

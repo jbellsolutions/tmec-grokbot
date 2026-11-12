@@ -5,6 +5,10 @@ description: Searches the public web and X for people asking about solar, batter
 
 # Radar sweep
 
+## Usage (read less)
+
+Open a thread only through `python3 /workspace/tmec-team/repo/usage/scripts/clean_page.py <url> --max-chars 3000`, and only when the search snippet can't settle the verdict. Check the ledger with `grep_lines.sh <id> /workspace/tmec-team/data/radar`, never by reading the whole file. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - `/workspace/tmec-team/data/radar/ledger.csv`: every post already seen. Columns: `id,url,platform,community,posted,seen,verdict,tier,status,note`. `id` is the first 12 characters of the SHA-256 of the post URL. Status is one of `new`, `drafted`, `approved`, `posted`, `skipped`, `rejected`, `won`.
 - `/workspace/tmec-team/data/radar/searches.md`: the search wording in use (starts as the list below; the weekly tune edits it).

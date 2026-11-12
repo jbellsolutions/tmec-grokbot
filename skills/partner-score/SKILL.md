@@ -5,6 +5,10 @@ description: Scores a prospective TMEC partner with the rubric's hard gates and 
 
 # Partner score
 
+## Usage (read less)
+
+Read each business's site or listing with `python3 /workspace/tmec-team/repo/usage/scripts/clean_page.py <url> --max-chars 4000`, never the full page; pick rows from the list files with `sheet_q.py`. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - `/workspace/tmec-team/repo/partners/kit/RUBRIC.md`: the gates, the ten criteria and the tiers.
 - `/workspace/tmec-team/repo/partners/kit/partner-types.md`: the ranked trades and the "beyond trades" partners.

@@ -7,6 +7,10 @@ description: Builds the Monday scoreboard: every lead source against Tommy's bou
 
 The answer to "what would it generate?" is a scoreboard, not a promise. Tommy's own numbers are the yardstick: bought leads at about 60 a lead, closing in the mid-20s percent, so roughly 240 to 250 a sale (his figures from the 28 Oct call; AUD is inferred; not yet measured).
 
+## Usage (read less)
+
+Answer each number with `python3 /workspace/tmec-team/repo/usage/scripts/sheet_q.py <file> "select ..."` and keep the source file closed. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - `/workspace/tmec-team/context/owner.md`: Tommy's bought-lead figures (cost per lead, close rate). Missing: the line is UNKNOWN and says so.
 - Counts for the week (Saturday to Friday, Brisbane), by source, from files and HubSpot, read only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only HubSpot route this bot has: not Connect apps; counts and dates only, no personal details):

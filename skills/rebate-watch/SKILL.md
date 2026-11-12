@@ -7,6 +7,10 @@ description: Re-checks the Clean Energy Regulator's rebate pages each month and 
 
 Tommy's own words (28 Oct call [13:25]): the next drop is "the end of this year. So 1st of January"; the battery rebate "drops every six months, solar every 12 months". Those are his statements. This skill turns them into a dated calendar that says where each fact comes from, and never states a figure it hasn't checked.
 
+## Usage (read less)
+
+Run `python3 /workspace/tmec-team/repo/usage/scripts/page_diff.py <page url> /workspace/tmec-team/data/forecast/watch` on each page first. No output means the page hasn't changed: keep the facts and re-date them. Read only the changed lines. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - `/workspace/tmec-team/data/forecast/rebates.md`: the calendar, Forecast's own file. First run: create it with the columns `Scheme | What steps down | Next step | Cadence | Source URL | Date checked | Status`.
 - `/workspace/tmec-team/context/owner.md`: Tommy's rebate statements.

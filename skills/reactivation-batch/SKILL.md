@@ -7,6 +7,10 @@ description: Picks the people for the next reactivation batch (old enquiries gon
 
 Tommy, 8 Nov: reactivation goes through HubSpot marketing email, not the Microsoft 365 mailboxes. Email and text. Drafts first. Verify emails first. "Go ahead and do it yourself" covers the HubSpot change. Test batch of 24, then ramp. Cadence he set: twice a week for four weeks, then every two weeks.
 
+## Usage (read less)
+
+Pick the batch from the state files with `python3 /workspace/tmec-team/repo/usage/scripts/sheet_q.py <file> "select ..."`, and cut HubSpot replies with `pick.py --fields`, never whole replies or whole files. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - HubSpot, read-only, with the one read-only token `HUBSPOT_TOKEN` in `/workspace/tmec-team/.secrets/hubspot.env` (the only token for reading; creating marketing emails and lists needs the separate `HUBSPOT_WRITE_TOKEN` at M4): contacts with their enquiry date, last two-way contact, stage, lead source, consent evidence, unsubscribe status and whether they are a marketing contact.
 - `/workspace/tmec-team/data/crm/suppression.csv` and HubSpot unsubscribe status.

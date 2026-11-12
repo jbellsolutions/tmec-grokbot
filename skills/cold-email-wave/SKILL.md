@@ -21,6 +21,10 @@ The wave id is the campaign name; a trades wave with several trades has the id `
 
 The item format, the decision path and the send gate are in `/workspace/tmec-team/repo/policies/APPROVALS.md`, section "Items, decisions and the send gate". That is the contract. Sent keys are lines in `/workspace/tmec-team/state/sent-keys-<slug>.md`: `<item id>|<outcome>|<date time>|<detail>`, with outcomes `launched`, `sent`, `declined`, `changed`, `stale`, `mismatch`.
 
+## Usage (read less)
+
+Pick wave rows and check de-dup with `python3 /workspace/tmec-team/repo/usage/scripts/sheet_q.py <list.csv> "select ..."` and `grep_lines.sh`, not by opening every list file. Scripts: `usage/SKILL.md`.
+
 ## Test mode
 In test mode, or when `config.json` `run` is `test`: the wave folder, list rows and hooks live under `/workspace/tmec-team/state/test/partners/` (same relative paths) instead of `data/partners/`; the ITEM id starts with `test-` (the item still goes to `approved/pending/<slug>/`); **no cold email tool call that creates, launches or sends anything, and no treg call** (write `not verified: test` in the `verified` column). Part 2 writes what it would have created to `state/test/` and stops.
 

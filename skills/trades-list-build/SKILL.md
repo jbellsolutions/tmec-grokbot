@@ -7,6 +7,10 @@ description: Builds the trades list: the top ten emailable businesses of each ra
 
 The trades list is the top ten of each ranked trade (rank 1 air-con and HVAC, rank 2 roofers and roof restorers, down to rank 8 insulation, tinting, blinds, screens and glaziers, in `partner-types.md`). It goes out by cold email in waves.
 
+## Usage (read less)
+
+Read each business's page with `python3 /workspace/tmec-team/repo/usage/scripts/clean_page.py <url> --max-chars 4000`, never the full page. De-dup against the other list files with `sheet_q.py` or `grep_lines.sh`, not by opening them. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - The trade: from a job in `/workspace/tmec-team/requests/to-trades-outreach/`, else the highest-ranked trade with fewer than ten emailable businesses listed.
 - `/workspace/tmec-team/repo/partners/kit/partner-types.md` (the ranked table and who is excluded), `RUBRIC.md`, and the `partner-score` skill.

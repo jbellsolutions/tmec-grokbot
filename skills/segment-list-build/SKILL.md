@@ -7,6 +7,10 @@ description: Builds one Dream 500 segment's list from public listings, scores ea
 
 A segment is an industry group in the service area, for example "pool service businesses, Sunshine Coast and Moreton Bay". The Dream 500 is every owner-run business in a segment that scores 50 to 74.
 
+## Usage (read less)
+
+Read each business's page with `python3 /workspace/tmec-team/repo/usage/scripts/clean_page.py <url> --max-chars 4000`, never the full page. De-dup against the other list files with `python3 /workspace/tmec-team/repo/usage/scripts/sheet_q.py <file> "select ..."` or `grep_lines.sh`, not by opening them. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - The segment: from a job in `/workspace/tmec-team/requests/to-dream-500/`, else the next one in this order that has no list yet: insurance-builders, roofers, aircon, pool, pest, plumbers, renovators, home-improvement (insulation, tinting, screens, glaziers), cleaners-landscapers (landscapers, gutter, window and panel cleaners), gas, ev-dealers, loss-adjusters.
 - `/workspace/tmec-team/repo/partners/kit/partner-types.md`, `RUBRIC.md`, and the `partner-score` skill.

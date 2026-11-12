@@ -60,6 +60,8 @@ Send the owner one message that checks three things:
 
 **Check:** you can name every private skill you saved; the count matches `manifest.json`.
 
+**Usage rules.** Read `policies/USAGE.md` and save its rules block to memory, word for word, under your standing role.
+
 ## Step 3. The intake
 
 If the owner attached `owner.md` or `asks.md` (Justin's team sends both), save them to `context/owner.md` and `context/asks.md` first. Then run the `getting-started` skill: read the known facts back, and ask only what's missing, one question at a time. Ask the `OPEN_QUESTIONS.md` rows marked for M1.
@@ -104,7 +106,7 @@ After their yes, for each charter in `manifest.json` except your own (`01-tmec-c
 1. Create a new bot with the charter's **Bot name**.
 2. Send it this setup message, with its charter file filled in, as a hand-off message. Wait for "ready".
    ```
-   You are part of TMEC's team that TMEC Command is building from /workspace/tmec-team/repo. Read /workspace/tmec-team/repo/agents/<charter file>. Save its Profile block to memory, word for word, as your standing role, and set it as your description if your settings allow it. Remember the facts in its Memory seed. Read /workspace/tmec-team/context/owner.md, /workspace/tmec-team/repo/docs/TEAM-DESIGN.md and the "Items, decisions and the send gate" section of /workspace/tmec-team/repo/policies/APPROVALS.md. Your skills are in /workspace/tmec-team/repo/skills/<name>/SKILL.md (your charter names them); if you can't see them as private skills, read them from there. Work only in /workspace/tmec-team/; read other bots' files only where your skills say so, and never write them. Don't create routines or message anyone until TMEC Command asks. Reply "ready" when done.
+   You are part of TMEC's team that TMEC Command is building from /workspace/tmec-team/repo. Read /workspace/tmec-team/repo/agents/<charter file>. Save its Profile block to memory, word for word, as your standing role, and set it as your description if your settings allow it. Read /workspace/tmec-team/repo/policies/USAGE.md and save its rules block to memory, word for word. Remember the facts in its Memory seed. Read /workspace/tmec-team/context/owner.md, /workspace/tmec-team/repo/docs/TEAM-DESIGN.md and the "Items, decisions and the send gate" section of /workspace/tmec-team/repo/policies/APPROVALS.md. Your skills are in /workspace/tmec-team/repo/skills/<name>/SKILL.md (your charter names them); if you can't see them as private skills, read them from there. Work only in /workspace/tmec-team/; read other bots' files only where your skills say so, and never write them. Don't create routines or message anyone until TMEC Command asks. Reply "ready" when done.
    ```
 3. If you can't create a bot or message it, use an **Owner step:** "Choose New chat (+) → Create new Bot. Rename it <name> by clicking its name. Then paste this as its first message:", followed by the setup message in full. Record "bot messages: no" in `context/config.json`; from then on, every hand-off is a file only.
 4. **Owner step** for each: "Open Settings → General → Bot → Timezone for <bot name> and pick Brisbane."
@@ -124,6 +126,25 @@ Then one job through the files: write `requests/to-dream-100/<today>-1.md` askin
 Also check each bot can read its skills: ask two bots to name one step of one of their skills.
 
 **Check:** each bot's answer is in `log/setup.md`; every bot is in `context/team-registry.md`.
+
+## Usage kit (usage-mastery v1.0.0)
+
+From `grokbot-usage-mastery`. Do these right after the workspace and memory steps.
+
+1. Run `bash /workspace/tmec-team/repo/usage/scripts/install.sh` (free, pinned, no keys) and paste its last line into `log/setup.md`.
+2. Save `/workspace/tmec-team/repo/usage/SKILL.md` as a private skill named usage-saver.
+3. Copy `/workspace/tmec-team/repo/usage/LEDGER.md` to `log/usage-ledger.md`. Ask Tommy for the baseline reading (Settings → Usage: % used and reset date) before the first test day, and again after it.
+4. The weekly audit (`/workspace/tmec-team/repo/usage/AUDIT.md`) runs inside the Monday evening report; it adds no routine and changes nothing.
+5. Check: `bash /workspace/tmec-team/repo/usage/scripts/grep_lines.sh 'usage-mastery v' /workspace/tmec-team/repo/usage/.. 3` prints at least one line (the rules are in place and the scripts run).
+6. Show Tommy the two owner-only steps, once per Grok account, and record the answers in `log/setup.md`:
+   - A spending cap: grok.com/dashboard/billing → a monthly additional-usage limit, or Auto top-up off. The bot never changes billing.
+   - Three lines for Auto-review → Custom Rules (chat only; routines never wait on approvals):
+
+     ```
+     Ask first before opening more than 5 web pages for one task.
+     Ask first before starting a sub-agent or a second bot on a job.
+     Ask first before re-running a step that has already failed twice.
+     ```
 
 ## Step 7. The Orgo agents that do the same jobs
 

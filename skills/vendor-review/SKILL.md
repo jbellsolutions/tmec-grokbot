@@ -7,6 +7,10 @@ description: Weekly review of TMEC's lead vendors and up to two new ones from pu
 
 One job: an honest, sourced picture of the vendors, and only the changes reach Tommy. This skill reads public pages and TMEC's own files. It sends nothing and changes no vendor. Vendors are not partners.
 
+## Usage (read less)
+
+Run `python3 /workspace/tmec-team/repo/usage/scripts/page_diff.py <page url> /workspace/tmec-team/data/vendors/watch` on each vendor page first. Only the changed lines are read, and only changes reach Tommy. Scripts: `usage/SKILL.md`.
+
 ## Inputs
 - `/workspace/tmec-team/context/owner.md`: `vendor_scout` (`on`/`off`), `lead_vendors`, `baseline_cost_per_lead_aud`, `baseline_close_rate_pct`. `/workspace/tmec-team/context/config.json`: `vendor_messages` (`no` or `drafts`).
 - `/workspace/tmec-team/data/vendors/`: one note per vendor (`<vendor-slug>.md`), the terms comparison, the last review, and `messages.md` (one line per message: id, vendor, status, date).
