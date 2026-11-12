@@ -20,6 +20,7 @@ Run `bash skills/usage-saver/scripts/install.sh` once (pinned versions; every sc
 | Long command output | `<command> 2>&1 \| python3 scripts/shorten.py` | ~55% |
 | A call that sometimes fails | `python3 scripts/retry.py --tries 3 -- <command>` | no re-run of the whole job |
 | Check a result's shape before using it | `python3 scripts/check_shape.py shape.json result.json` | fix only the bad fields |
+| Apply a new optimization update | `optimizer/SKILL.md` and `python3 optimizer/update.py apply <unpacked-update>` | only what changed, with a backup |
 | See where usage went | `python3 scripts/usage_csv.py data/usage/export.csv` (the dashboard's CSV export; never paste it into chat) | the export stays out of the chat |
 
 ## Rules

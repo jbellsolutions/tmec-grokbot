@@ -1,0 +1,6 @@
+{
+ "owner": "Tommy",
+ "update_url": "https://github.com/jbellsolutions/tmec-grokbot/releases/latest/download/tmec-grokbot-update.zip",
+ "workspace": "/workspace/tmec-team",
+ "repo": "/workspace/tmec-team/repo"
+}

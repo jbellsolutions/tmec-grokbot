@@ -175,6 +175,18 @@
       "skills": [
         "vendor-review"
       ]
+    },
+    {
+      "name": "Optimizer",
+      "charter": "agents/12-optimizer.md",
+      "account": "business",
+      "milestone": "on Tommy's yes",
+      "routines": [
+        "routines/optimizer-check.prompt"
+      ],
+      "skills": [
+        "optimizer"
+      ]
     }
   ],
   "skills": [
@@ -289,6 +301,10 @@
     {
       "name": "vendor-review",
       "path": "skills/vendor-review"
+    },
+    {
+      "name": "optimizer",
+      "path": "usage/optimizer"
     }
   ],
   "projects": [],

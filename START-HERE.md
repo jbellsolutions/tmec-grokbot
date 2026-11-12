@@ -102,7 +102,7 @@ Write each connection and secret name (never the value) to `context/team-registr
 
 Tell the owner: "I'm creating ten bots now: Lead Radar, Dream 100, Dream 500, Trades Outreach, CRM & Reactivation, Content Studio, SEO, Ops, Forecast and Vendor Scout. They share this computer and folder. None of them sends anything until you say so. OK?"
 
-After their yes, for each charter in `manifest.json` except your own (`01-tmec-command.md`), M1 bots first, then M2:
+After their yes, for each charter in `manifest.json` except your own (`01-tmec-command.md`), M1 bots first, then M2: (Skip the Optimizer, `12-optimizer.md`: it is created only when the owner says yes to it. Until then you apply optimization updates yourself with the optimizer skill.)
 1. Create a new bot with the charter's **Bot name**.
 2. Send it this setup message, with its charter file filled in, as a hand-off message. Wait for "ready".
    ```
@@ -127,7 +127,7 @@ Also check each bot can read its skills: ask two bots to name one step of one of
 
 **Check:** each bot's answer is in `log/setup.md`; every bot is in `context/team-registry.md`.
 
-## Usage kit (usage-mastery v1.0.0)
+## Usage kit (usage-mastery v1.1.0)
 
 From `grokbot-usage-mastery`. Do these right after the workspace and memory steps.
 
@@ -136,7 +136,8 @@ From `grokbot-usage-mastery`. Do these right after the workspace and memory step
 3. Copy `/workspace/tmec-team/repo/usage/LEDGER.md` to `log/usage-ledger.md`. Ask Tommy for the baseline reading (Settings → Usage: % used and reset date) before the first test day, and again after it.
 4. The weekly audit (`/workspace/tmec-team/repo/usage/AUDIT.md`) runs inside the Monday evening report; it adds no routine and changes nothing.
 5. Check: `bash /workspace/tmec-team/repo/usage/scripts/grep_lines.sh 'usage-mastery v' /workspace/tmec-team/repo/usage/.. 3` prints at least one line (the rules are in place and the scripts run).
-6. Show Tommy the two owner-only steps, once per Grok account, and record the answers in `log/setup.md`:
+6. Optimizer: save `/workspace/tmec-team/repo/usage/optimizer/SKILL.md` as a private skill named optimizer, and run `python3 /workspace/tmec-team/repo/usage/optimizer/update.py init`. Later updates arrive as one pasted line; the optimizer applies only what changed.
+7. Show Tommy the two owner-only steps, once per Grok account, and record the answers in `log/setup.md`:
    - A spending cap: grok.com/dashboard/billing → a monthly additional-usage limit, or Auto top-up off. The bot never changes billing.
    - Three lines for Auto-review → Custom Rules (chat only; routines never wait on approvals):
 
@@ -145,7 +146,6 @@ From `grokbot-usage-mastery`. Do these right after the workspace and memory step
      Ask first before starting a sub-agent or a second bot on a job.
      Ask first before re-running a step that has already failed twice.
      ```
-
 ## Step 7. The Orgo agents that do the same jobs
 
 Tommy's Hermes agents on his four Orgo computers do several of these jobs. Two bots must never write the same thing, so each Orgo routine below is **paused before its Grok twin's routines go on** in Step 8. Pausing a live agent is Justin's yes, done by Justin's team from `tmec-aios` (`python3 tools/orgo_team.py routine <role> "<routine name>" off`, per routine, quoted because names have spaces). You don't touch the Orgo computers.

@@ -1,0 +1,15 @@
+NAME: Optimizer check
+OWNER: Optimizer
+ACCOUNT: business
+WHEN: Mondays at 4:07 AM (Australia/Brisbane)
+MILESTONE: on Tommy's yes
+STATUS: Created paused. Turned on only after Tommy says yes.
+---
+Switch check: read /workspace/tmec-team/context/routines-on.md. If "Optimizer check" isn't listed there as "on" or "test", append "<time> · Optimizer check · SKIPPED_OFF" to /workspace/tmec-team/log/runs-<YYYY-MM>.md and stop.
+Test mode: if it's listed as "test", write only under /workspace/tmec-team/state/test/ and send nothing to anyone.
+Stop check: if /workspace/tmec-team/state/EXTERNAL_WRITES_STOPPED exists, append "<time> · Optimizer check · SKIPPED_STOPPED" to the run log and stop.
+Isolation guard: work only in /workspace/tmec-team/. If /workspace/tmec-team/context/owner.md is missing, append "<time> · Optimizer check · NO_CLIENT_SOURCE" to the run log and stop. Never read or write other bots' memory or logins.
+Lean run: run python3 /workspace/tmec-team/repo/usage/optimizer/update.py check. No output: append "<time> · Optimizer check · NO_CHANGE" to the run log and end with [SILENT].
+If it prints NEW <version>: in test mode (listed "test"), only write "update <version> available" to /workspace/tmec-team/state/test/optimizer.md and stop. Otherwise follow your optimizer skill for that update, then write three lines to /workspace/tmec-team/daily/<today>/optimizer.md for TMEC Command's brief: the version, files changed, anything waiting on Tommy.
+Run log: when you finish, append "<time> · Optimizer check · EXECUTED · <one-line result>" to /workspace/tmec-team/log/runs-<YYYY-MM>.md, or FAILED with the reason.
+Send nothing to anyone. Change no approval, gate, send limit, schedule or charter.
