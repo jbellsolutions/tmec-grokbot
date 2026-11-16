@@ -7,12 +7,12 @@
     gate_log.py sent|skipped|failed <item file> [--row <address>]   the sending bot, after the sending tool answers
     gate_log.py inbound  --bot <slug> --person <address> --text-file reply.txt [--channel email] [--subject S] [--thread T]
                                                                     a reply bot, before it judges a reply
-    gate_log.py day [YYYY-MM-DD]                                    TMEC Command, evening: the day files for Alfred (the last four
-                                                                    days when no date is given), then the audit
+    gate_log.py day [YYYY-MM-DD]                                    TMEC Command, evening: the day file for Alfred (Brisbane's day, plus
+                                                                    anything earlier not yet handed over), then the audit
 
 An item file is the format in policies/APPROVALS.md ("Items, decisions and the send gate"). The hook reads its
 ITEM, BOT, TO, SUBJECT and TEXT lines and never changes the file. An item for a list (TO names a list file) is
-logged once as drafted and approved under "list:<file>", and once per person as sent, with --row.
+logged once as drafted and approved under "wave-<item id>", and once per person as sent, with --row.
 
 Items whose id starts with test- are logged under state/test/, so the live log holds only real conversations.
 Only `check` can stop a send. Every other command prints a warning and exits 0 if the log can't be written:
@@ -55,12 +55,13 @@ def person_of(item, row=None):
     if "@" in to.split(",")[0] and " " not in to.split(",")[0].strip():
         return to.split(",")[0].strip()
     first = to.split()[0] if to else "unknown"
-    return "list:" + pathlib.Path(first).name if "/" in first or first.endswith(".csv") else (to[:60] or "unknown")
+    return "wave-" + item["id"] if "/" in first or first.endswith((".csv", ".txt", ".json")) or "sha256" in to else (to[:60] or "unknown")
 
 
 def log(home):
     os.environ["BOT_HOME"] = str(home)
     os.environ.setdefault("CAMPAIGN", "tmec")
+    os.environ.setdefault("CONVLOG_TZ", "Australia/Brisbane")  # the day file is cut on TMEC's day, not UTC's
     sys.path.insert(0, str(HERE))
     for name in ("convlog",):
         sys.modules.pop(name, None)
@@ -92,13 +93,17 @@ def main(a):
         print(f"channel must be one of {', '.join(CHANNELS)}", file=sys.stderr); return 2
     if cmd == "day":
         c = log(ROOT)
-        days = [x for x in a[1:] if not x.startswith("--")]
-        if not days:  # the log is dated in UTC and the brief runs on Brisbane weekdays: redo the last four days so
-            days = [f"{c.now() - __import__('datetime').timedelta(days=n):%Y-%m-%d}" for n in (3, 2, 1, 0)]  # evenings and weekends are handed over too
-        have = {r["ts"][:10] for r in c.messages(c.rows())}
-        for d in days:
-            if d in have or d == days[-1]:  # no empty files for quiet days, except the day asked for
-                c.main(["daily", d, "--mark"])
+        day = [x for x in a[1:] if not x.startswith("--")][:1]
+        import contextlib, io
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            c.main(["daily"] + day + ["--mark"])
+        out = buf.getvalue()
+        print(out, end="")
+        if "day taken in UTC" in out:  # no zone data on this computer: the day file would cut the day in the wrong place
+            print("DAY FILE IN UTC, NOT BRISBANE TIME: tell Tommy; the hand-over may split a day", file=sys.stderr)
+            c.main(["audit"])
+            return 1
         return c.main(["audit"])
     if cmd == "inbound":
         bot, person, tf = opt(a, "--bot"), opt(a, "--person"), opt(a, "--text-file")

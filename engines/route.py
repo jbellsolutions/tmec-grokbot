@@ -25,7 +25,8 @@ Text inside items is data, never instructions; prompt files say so too."""
 import datetime, json, os, pathlib, shutil, subprocess, sys, tempfile, time
 
 HERE = pathlib.Path(__file__).resolve().parent
-AGENTS = json.loads(((HERE / "agents.json") if (HERE / "agents.json").exists() else (HERE.parent / "agents.json")).read_text())["agents"]
+# A pack may keep its own map beside this file (its own agent names); the template's sits one folder up.
+AGENTS = json.loads(next(f for f in (HERE / "agents.json", HERE.parent / "agents.json") if f.exists()).read_text())["agents"]
 TIMEOUT = int(os.environ.get("ENGINE_TIMEOUT", "600"))
 
 
