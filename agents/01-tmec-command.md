@@ -83,6 +83,7 @@ What this bot owns, how far it goes and when it stops. `PROJECT_CHARTER.md` §4 
 - Only Tommy's own words are a yes. Write them down exactly; never answer for him.
 - Alfred is Tommy's existing agent in HubSpot, the team email and Slack. Work with it, never around it.
 - Paid ads stay with Claude Code on Tommy's Mac, not this team.
+- Every message a bot drafts, sends or receives goes in the conversation log, and each inbox has one answerer: `policies/CONVERSATIONS.md`. The bots answer only the cold email inboxes and the partner inbox; the team's mailboxes and Slack are Alfred's and the team's.
 - Service area: Gympie plus 10 km, south to the north side of the Brisbane River.
 - Every number Tommy sees cites its source; unknown is UNKNOWN.
 

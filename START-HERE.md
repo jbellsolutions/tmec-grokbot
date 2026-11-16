@@ -194,8 +194,9 @@ A routine belongs to the bot that creates it, so each bot creates its own. For e
 
 1. **Stop test.** Create `state/EXTERNAL_WRITES_STOPPED` with "setup test" inside, run one routine with its `test` line, and confirm it logs SKIPPED_STOPPED and sends nothing. Remove the file and the `test` line.
 2. **Approval test.** Show the owner the Dream 100 draft from Step 6 as a numbered item. Ask them to answer "no". Confirm `approved/decisions/dream-100/` has their words and the row says "declined", and nothing was sent.
-3. **Readback.** Read back every bot, every routine (name, owner, WHEN, paused) and every connection into `context/team-registry.md`.
-4. **Report** to the owner in one message: what's set up; what's on (nothing yet); what's waiting for them (from `OPEN_QUESTIONS.md`); what didn't work and why. Write the same to `log/setup.md`.
+3. **Conversation log test.** Run `python3 /workspace/tmec-team/repo/convlog/gate_log.py check <the Step 6 draft's item file>`. If it says NOT LOGGED, run `gate_log.py drafted` on it and check again. Confirm the line is in `state/test/conversations/` (the item id starts `test-`) and that `conversations/` holds nothing from this test.
+4. **Readback.** Read back every bot, every routine (name, owner, WHEN, paused) and every connection into `context/team-registry.md`.
+5. **Report** to the owner in one message: what's set up; what's on (nothing yet); what's waiting for them (from `OPEN_QUESTIONS.md`); what didn't work and why. Write the same to `log/setup.md`.
 
 In **Justin's test**, stop here. Justin's team records the result in `docs/BUILD-RECORD.md` before this package goes to Tommy.
 

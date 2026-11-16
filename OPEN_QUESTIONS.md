@@ -41,6 +41,7 @@ TMEC Command asks these one at a time during the intake (`getting-started`), or 
 | 23 | Do you ask customers for reviews today, and how? Is TMEC on SolarQuotes or ProductReview? | SEO | 131 |
 | 24 | Hail-damaged panels in the radar from day one, or later with the hail desk? And commercial posts: hand them to CRM, or list them for you? | Lead Radar | 102, 120 |
 | 25 | Which suburbs and services count as confirmed for SEO? | SEO | 105 |
+| 26 | Do you pay for ChatGPT, and on which plan? Some bots can do their sorting on it and save your Grok and Claude usage. Without one they use your Claude plan | Which engine the bots think with (`docs/ENGINES.md`) | 61 |
 
 ## For Justin's team
 
@@ -63,6 +64,8 @@ TMEC Command asks these one at a time during the intake (`getting-started`), or 
 | J16 | Can Grok's Connect apps read the TMEC partner inbox, for forwarded partner replies? | Dream 100 |
 | J17 | Mail lifecycle (first-touch, review and maintenance emails) is paused with the other Orgo mail routines, because it keeps its own opt-out files. Move those emails to CRM & Reactivation, or sync opt-outs both ways (through HubSpot) and keep it running? | Lifecycle emails |
 | J18 | Vendor Scout's messages: Tommy sends each one himself today. Keep that, or send from his mailbox on his yes like Dream 100? | Vendor Scout |
+| J19 | Alfred and the partner threads: Dream 100 reads the threads of its own sent messages in Tommy's mailbox, which Alfred also watches. Tommy tells Alfred to leave those threads, or partner replies go only to the partner inbox. Until then Dream 100 drafts nothing on a thread someone else answered | Dream 100 replies |
+| J20 | The engine router is in the pack and nothing calls it. Turning it on needs the Claude Code CLI (and Codex, if Tommy has ChatGPT) signed in on the bot's computer with Tommy's own plans, by hidden prompt, on his yes | `docs/ENGINES.md` |
 | J7 | One HubSpot key shared by CRM & Reactivation and Content Studio, kept apart by the `REACT-` and `NEWS-` name prefixes: acceptable? | M4 |
 
 ## Owed by Justin's team

@@ -29,6 +29,7 @@ The item and decision formats are in `/workspace/tmec-team/repo/policies/APPROVA
    TOMMY: "<his exact words>", <date time>
    ```
    "Yes but say Tuesday" is ANSWER: change; the bot redrafts it as a new item.
+   On `ANSWER: yes`, run `python3 /workspace/tmec-team/repo/convlog/gate_log.py approved <pending item file>` so the yes is in the conversation log.
 5. **Nudge** the owning bot right away ("Decision in approved/decisions/<slug>/<id>.md"), so it acts in its own chat. If bot messages don't work, its next routine run picks it up; say so to Tommy if that's tomorrow.
 6. Add a line to `vault/Decisions.md` only when it changes how the team works (a standing approval, a rule).
 

@@ -1,0 +1,78 @@
+{
+ "_doc": "Which engine each TMEC bot thinks with, read by engines/route.py. grokbot: the bot's own run does the thinking and route.py calls nothing. claude: Claude Code CLI on Tommy's Claude plan. codex: Codex CLI on a ChatGPT plan. Whether Tommy has a ChatGPT plan is not known (2026-11-16), so every codex bot falls back to claude, and route.py does that by itself when the codex CLI is not installed. Nothing in the pack calls route.py yet: see docs/ENGINES.md.",
+ "version": "0.1.0",
+ "from_template": "revenue-os agents.json 0.1.0",
+ "agents": {
+  "tmec-command": {
+   "name": "TMEC Command",
+   "engine": "grokbot",
+   "fallback": []
+  },
+  "lead-radar": {
+   "name": "Lead Radar",
+   "engine": "codex",
+   "fallback": [
+    "claude"
+   ]
+  },
+  "dream-100": {
+   "name": "Dream 100",
+   "engine": "grokbot",
+   "fallback": []
+  },
+  "dream-500": {
+   "name": "Dream 500",
+   "engine": "grokbot",
+   "fallback": []
+  },
+  "trades-outreach": {
+   "name": "Trades Outreach",
+   "engine": "grokbot",
+   "fallback": []
+  },
+  "crm-reactivation": {
+   "name": "CRM & Reactivation",
+   "engine": "codex",
+   "fallback": [
+    "claude"
+   ]
+  },
+  "content-studio": {
+   "name": "Content Studio",
+   "engine": "claude",
+   "fallback": [
+    "codex"
+   ]
+  },
+  "seo": {
+   "name": "SEO",
+   "engine": "codex",
+   "fallback": [
+    "claude"
+   ]
+  },
+  "ops": {
+   "name": "Ops",
+   "engine": "grokbot",
+   "fallback": []
+  },
+  "forecast": {
+   "name": "Forecast",
+   "engine": "grokbot",
+   "fallback": []
+  },
+  "vendor-scout": {
+   "name": "Vendor Scout",
+   "engine": "grokbot",
+   "fallback": []
+  },
+  "reply": {
+   "name": "Reply sorting and drafting (used by the reply routines of Dream 100, Dream 500 and Trades Outreach)",
+   "engine": "codex",
+   "fallback": [
+    "claude"
+   ],
+   "draft_engine": "claude"
+  }
+ }
+}

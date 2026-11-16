@@ -49,6 +49,8 @@ HASH: <sha256 of every byte between the ---PAYLOAD--- line and the ---END--- lin
 awk '/^---PAYLOAD---$/{f=1;next} /^---END---$/{f=0} f' <item file> | sha256sum | cut -d" " -f1
 ```
 
+**Every item goes in the conversation log.** Right after writing an item file, its bot runs `python3 /workspace/tmec-team/repo/convlog/gate_log.py drafted <item file>` (rules in `policies/CONVERSATIONS.md`).
+
 **A queued item is never rewritten.** Once an item file is in `approved/pending/`, its bot doesn't edit it; a change is a new item id, and the old one is closed with the outcome `superseded` in its sent-keys file.
 
 The payload holds everything that makes the action what it is: who it goes to, when, and the exact words. A list is covered by its file's own sha256, so a rebuilt list doesn't match.
@@ -62,7 +64,8 @@ The payload holds everything that makes the action what it is: who it goes to, w
 4. A decision exists at `approved/decisions/<bot-slug>/<id>.md` with `ANSWER: yes`, a `SHOWN:` time (not "brief line only"), dated after `live_sends` went true or re-shown since, and the HASH you **recompute** from the pending file now (the command above) equals the decision's HASH.
 5. Its sent key isn't in `state/sent-keys-<bot-slug>.md`.
 6. The item id doesn't start with `test-`. Test items are never sent, whatever the decision says.
-Any check failing: do nothing outward, write why in the daily note, and stop that item. After acting (or on "no" or "change"), add the item id to the sent-keys file with the outcome, so it's never handled twice. A "change" is redrafted once, as a new item id.
+7. `python3 /workspace/tmec-team/repo/convlog/gate_log.py check <item file>` exits 0: the exact text is in the conversation log as a draft.
+Any check failing: do nothing outward, write why in the daily note, and stop that item. After acting (or on "no" or "change"), add the item id to the sent-keys file with the outcome, so it's never handled twice, and run `gate_log.py sent <item file>` (or `skipped`, or `failed`; `--row <address>` for each person on a list) once the sending tool has answered. A "change" is redrafted once, as a new item id.
 
 **When decisions are acted on.** TMEC Command nudges the bot right after writing a decision; the bot acts in its own chat then. Its next routine run is the fallback. If an Auto-review prompt appears inside a routine and expires, the item stays "approved, not sent" and the bot lists it in its daily note, so the brief shows it.
 
