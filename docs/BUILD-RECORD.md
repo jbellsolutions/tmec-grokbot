@@ -87,5 +87,5 @@ This record keeps what's specified, what's built and what's actually running sep
 
 | Date | Change | Asks |
 |---|---|---|
-| 2026-11-16 | Not released (branch `revenue-os/convlog-2026-11-16`). From the Revenue OS template: the conversation log (`convlog/`, hooked into the send gate as check 7, with a day file for Alfred), the rule for who answers which inbox (`policies/CONVERSATIONS.md`), and the engine router, switched off (`engines/`, `docs/ENGINES.md`). No partner tier, show or LinkedIn bot was added | 26, 129 |
+| 2026-11-19 | v1.0.4. From the Revenue OS template: the conversation log (`convlog/`, hooked into the send gate as check 7, with a day file for Alfred), the rule for who answers which inbox (`policies/CONVERSATIONS.md`), and the engine router, switched off (`engines/`, `docs/ENGINES.md`). No partner tier, show or LinkedIn bot was added | 26, 129 |
 | 2026-11-11 | First build: TMEC Command plus ten bots on one Grok account; ported from `tmec-aios`; paid ads left with Claude Code; SEO added | 125 to 131, and the rows each charter names |
